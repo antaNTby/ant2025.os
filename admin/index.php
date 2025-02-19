@@ -1,6 +1,7 @@
 <?php 
 #### index.php ####
 ### 2025-02-19 ####
+
 echo "hello! admin index is here";
 
 $dird          = dirname($_SERVER['PHP_SELF']); ## "/"
@@ -10,8 +11,8 @@ $dirf          = ($dird != "/") ? "/" : "";
 $url =  "https://".$_SERVER['HTTP_HOST'] . $dird . $dirf;
 
 echo "<pre>dird  = `{$dird}`   </pre>";
-echo "<pre>dirf  = `{$dirf}`   </pre>";
-echo "<pre>url  = `{$url}`   </pre>";
+// echo "<pre>dirf  = `{$dirf}`   </pre>";
+// echo "<pre>url  = `{$url}`   </pre>";
 
 define('CONF_FULL_SHOP_URL', trim($url)); // "http://antcms.os/admin/"
 define('PATH_DELIMITER', (isset($_SERVER['WINDIR']) || isset($_SERVER['windir'])) ? ';' : ':');
@@ -31,3 +32,15 @@ if (function_exists('setlocale') === true)
 }
 
 echo CONF_FULL_SHOP_URL;
+
+/*
+
+{
+    "phpcs_php_path":               "c:/OSPanel/modules/PHP-8.3/PHP",
+    "phpcs_executable_path":        "c:/OSPanel/data/PHP-8.3/default/composer/vendor/bin/phpcs.bat",
+    "phpmd_executable_path":        "c:/OSPanel/data/PHP-8.3/default/composer/vendor/bin/phpmd.bat",
+    "phpcbf_executable_path":       "c:/OSPanel/data/PHP-8.3/default/composer/vendor/bin/phpcbf.bat",
+    "php_cs_fixer_executable_path": "c:/OSPanel/data/PHP-8.3/default/composer/vendor/bin/php-cs-fixer.bat",
+}
+
+*/
