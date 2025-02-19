@@ -1,4 +1,4 @@
-_2025_.sublime-workspace
+*.sublime-workspace
 # Specify filepatterns you want git to ignore.
 /.vscode
 /.idea
