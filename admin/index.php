@@ -2,6 +2,20 @@
 #### index.php ####
 ### 2025-02-19 ####
 
+
+
+
+require '../vendor/autoload.php';
+
+
+
+
+
+
+
+
+
+
 echo "hello! admin index is here";
 
 $dird          = dirname($_SERVER['PHP_SELF']); ## "/"

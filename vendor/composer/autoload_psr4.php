@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Smarty\\' => array($vendorDir . '/smarty/smarty/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
 );
