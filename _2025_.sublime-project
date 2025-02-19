@@ -4,17 +4,20 @@
             "path": ".",
             "file_exclude_patterns": [
                 //
+                // "composer.*",
             ],
             "file_include_patterns": [
                 //
             ],
             "folder_exclude_patterns": [
                 //
+                "public"
             ],
             "index_exclude_patterns": [
                 //
             ],
         },
+        //
         {
             "path": "../.././logs/",
             "file_include_patterns": [
@@ -23,15 +26,15 @@
             ],
             "folder_exclude_patterns": [
                 "Bind",
-                 "domains",
-                 "mail",
-                 "Maria*",
-                 "MySQL*",
-                 "Ngi*",
-                 "PHP*",
-                 "PMA*",
-                 "Rab*",
-             ],
+                "domains",
+                "mail",
+                "Maria*",
+                "MySQL*",
+                "Ngi*",
+                "PHP*",
+                "PMA*",
+                "Rab*",
+            ],
 
         },
 
