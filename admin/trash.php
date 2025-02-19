@@ -41,3 +41,20 @@
 }
 
 */
+
+
+// https://calc-best.ru/matematicheskie/delenie-umnozhenie-pribavlenie-i-vychitanie-stolbikom/delenie-stolbikom?n1=950&n2=19
+
+
+
+// $variable = ['key' => 'value'];
+// // VarDumper::dump($variable);
+
+// class PropertyExample
+// {
+//     public string $publicProperty = 'The `+` prefix denotes public properties,';
+//     protected string $protectedProperty = '`#` protected ones and `-` private ones.';
+//     private string $privateProperty = 'Hovering a property shows a reminder.';
+// }
+// $varClass = new PropertyExample();
+// dump($varClass);
