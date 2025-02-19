@@ -8,6 +8,7 @@ class ComposerStaticInit7b75e8ae3546009c261c7a0e0ce55e53
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         'c15d4a1253e33e055d05e547c61dcb71' => __DIR__ . '/..' . '/smarty/smarty/src/functions.php',
     );
 
@@ -16,6 +17,10 @@ class ComposerStaticInit7b75e8ae3546009c261c7a0e0ce55e53
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Smarty\\' => 7,
+        ),
+        'F' => 
+        array (
+            'FastRoute\\' => 10,
         ),
     );
 
@@ -27,6 +32,10 @@ class ComposerStaticInit7b75e8ae3546009c261c7a0e0ce55e53
         'Smarty\\' => 
         array (
             0 => __DIR__ . '/..' . '/smarty/smarty/src',
+        ),
+        'FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
     );
 
