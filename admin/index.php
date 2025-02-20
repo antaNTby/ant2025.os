@@ -210,9 +210,9 @@ if ($mysqli->connect_error) {
 
 // Несколько SQL-запросов
 $sql = "
-    INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com');
-    INSERT INTO users (name, email) VALUES ('Jane Smith', 'jane@example.com');
-    UPDATE users SET email = 'john.doe@example.com' WHERE name = 'John Doe';
+    INSERT INTO `ant_ippost` (time_stamp,title,ip) VALUES (NOW(),'John Doe', '192.168.31.200');
+    INSERT INTO `ant_ippost` (time_stamp,title,ip) VALUES (NOW(),'Jane Smith', '192.168.31.255');
+    UPDATE `ant_ippost` SET ip = '192.168.1.111' WHERE title = 'John Doe';
 ";
 
 if ($mysqli->multi_query($sql)) {
