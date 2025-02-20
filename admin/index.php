@@ -3,18 +3,53 @@
 ### 2025-02-19 ####
 require '../vendor/autoload.php';
 
-// Set the default character encoding
-if (function_exists('mb_internal_encoding') === true)
-{
-    mb_internal_encoding('UTF-8');
-}
-// Set the default locale
-if (function_exists('setlocale') === true)
-{
-    // setlocale(LC_ALL, 'en_US.UTF-8');
-    setlocale(LC_ALL, 'ru_Belarus.UTF-8');
-}
 
+/*
+ * Get Tracy up and running
+ * https://tracy.nette.org/
+ */
+
+use Tracy\Debugger;
+// в режиме разработки вы будете видеть уведомления или предупреждения об ошибках как BlueScreen
+// Debugger::$strictMode = E_ALL; /* ... */; // (bool|int) по умолчанию false, вы можете выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
+Debugger::$strictMode = true; // display all errors
+// Debugger::$strictMode = E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED; // all errors except deprecated notices
+Debugger::$showLocation = true; // Shows all additional location information
+// отображает беззвучные (@) сообщения об ошибках
+Debugger::$scream = E_ALL; /* ... */; // (bool|int) по умолчанию false, с версии 2.9 можно выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
+// скрывать значения этих ключей (начиная с версии Tracy 2.8)
+Debugger::$keysToHide = ['password', /* ... */]; // (string[]) по умолчанию []
+
+Debugger::$logDirectory = 'C:/tmp';
+
+// Debugger::$dumpTheme = 'dark';
+Debugger::$dumpTheme = 'light';
+// Debugger::$showBar = false;
+Debugger::$maxDepth = 2; // default: 3
+Debugger::$maxLength = 80; // default: 150
+
+// формат ссылки для открытия в редакторе
+// Debugger::$editor = /* ... */; // (string|null) по умолчанию 'editor://open/?file=%file&line=%line'
+Debugger::$editor = 'subl://open?file=%file&line=%line'; 
+
+Debugger::enable();
+
+
+// пример вывода в плавающем окне
+//            bdump([1, 3, 5, 7, 9], 'odd numbers up to ten');
+
+// пример вывода в теле сайта
+//            $arr=[222,333,44,5555,6,77777];
+//            Debugger::dump($arr);
+
+// Еще один полезный инструмент – секундомер отладчика с точностью до микросекунд:
+//            Debugger::timer();
+//            // sweet dreams my cherrie
+//            sleep(2);
+//            $elapsed = Debugger::timer();
+//            // $elapsed = 2
+//            echo $elapsed;
+//            dump( $elapsed);
 
 ### отладчик Symfony\Component\VarDumper
 ### https://symfony.com/doc/current/components/var_dumper.html#using-the-vardumper-component-in-your-phpunit-test-suite
@@ -77,20 +112,20 @@ $smarty = new Smarty();
 $smarty->setTemplateDir('../admin/tpl');                        // здесь лежат шаблоны tpl.html
 
 $smarty->setCompileDir('../admin/smarty/compile_dir'); // здесь компилируюся *.php
-$smarty->setConfigDir('../admin/smarty/smarty_config/');           // незнаю
-$smarty->setCacheDir('../admin/smarty/smarty_cache/');
+$smarty->setConfigDir('../admin/smarty/smarty_config');           // незнаю
+$smarty->setCacheDir('../admin/smarty/smarty_cache');
 
 $smarty->compile_id    = 'ant2025';
 $smarty->force_compile = true;
 // $smarty->setEscapeHtml(true); //Enable auto-escaping for HTML as follows:
 $smarty->setEscapeHtml(false);
 // $smarty->testInstall();
-dump($smarty);
+dump($smarty->compile_id);
 
 ### конец ### шаблонизатор Smarty 5.x
 
-
-
+$sss =2222;
+$ff=222/(100-100);
 
 
 // dd("ddd");

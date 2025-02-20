@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '1a02cb40bd198dff31e609207bf24e2a54ee0dbf',
+        'reference' => '3d216bbf44bcf8aa1d5527181b8bf6e8cda2dc6e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1a02cb40bd198dff31e609207bf24e2a54ee0dbf',
+            'reference' => '3d216bbf44bcf8aa1d5527181b8bf6e8cda2dc6e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -54,6 +54,15 @@
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'tracy/tracy' => array(
+            'pretty_version' => 'v2.10.9',
+            'version' => '2.10.9.0',
+            'reference' => 'e7af75205b184ca8895bc57fafd331f8d5022d26',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../tracy/tracy',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );
