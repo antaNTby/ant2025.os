@@ -1,15 +1,19 @@
-<?php 
+<?php
 #### index.php ####
 ### 2025-02-19 ####
 require '../vendor/autoload.php';
-
 
 /*
  * Get Tracy up and running
  * https://tracy.nette.org/
  */
 
+use Smarty\Smarty;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\VarDumper;
 use Tracy\Debugger;
+
 // в режиме разработки вы будете видеть уведомления или предупреждения об ошибках как BlueScreen
 // Debugger::$strictMode = E_ALL; /* ... */; // (bool|int) по умолчанию false, вы можете выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
 Debugger::$strictMode = true; // display all errors
@@ -18,22 +22,21 @@ Debugger::$showLocation = true; // Shows all additional location information
 // отображает беззвучные (@) сообщения об ошибках
 Debugger::$scream = E_ALL; /* ... */; // (bool|int) по умолчанию false, с версии 2.9 можно выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
 // скрывать значения этих ключей (начиная с версии Tracy 2.8)
-Debugger::$keysToHide = ['password', /* ... */]; // (string[]) по умолчанию []
+Debugger::$keysToHide = ['password' /* ... */]; // (string[]) по умолчанию []
 
 Debugger::$logDirectory = 'C:/tmp';
 
 // Debugger::$dumpTheme = 'dark';
 Debugger::$dumpTheme = 'light';
 // Debugger::$showBar = false;
-Debugger::$maxDepth = 2; // default: 3
+Debugger::$maxDepth  = 2;  // default: 3
 Debugger::$maxLength = 80; // default: 150
 
 // формат ссылки для открытия в редакторе
 // Debugger::$editor = /* ... */; // (string|null) по умолчанию 'editor://open/?file=%file&line=%line'
-Debugger::$editor = 'subl://open?file=%file&line=%line'; 
+Debugger::$editor = 'subl://open?file=%file&line=%line';
 
 Debugger::enable();
-
 
 // пример вывода в плавающем окне
 //            bdump([1, 3, 5, 7, 9], 'odd numbers up to ten');
@@ -54,10 +57,6 @@ Debugger::enable();
 ### отладчик Symfony\Component\VarDumper
 ### https://symfony.com/doc/current/components/var_dumper.html#using-the-vardumper-component-in-your-phpunit-test-suite
 
-use Symfony\Component\VarDumper\VarDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-
 // Установка обработчика дампа
 VarDumper::setHandler(function ($var) {
     // Создаем экземпляр HtmlDumper
@@ -69,25 +68,25 @@ VarDumper::setHandler(function ($var) {
     // Настраиваем стили
     $dumper->setStyles([
         'default' => 'background-color:#282c34; opacity:0.8; color:#abb2bf; line-height:1.2em;',
-        'num' => 'color:#d19a66;',
-        'str' => 'color:#98c379;',
-        'note' => 'color:#61afef;',
+        'num'     => 'color:#d19a66;',
+        'str'     => 'color:#98c379;',
+        'note'    => 'color:#61afef;',
     ]);
     // Сбрасываем стили
     $dumper->setStyles([]);
 
     // Настраиваем опции отображения
     $dumper->setDisplayOptions([
-        'maxDepth' => 3,
+        'maxDepth'        => 3,
         'maxStringLength' => 80,
         // 'fileLinkFormat' => 'file://%f#L%l',
         // 'fileLinkFormat' => 'vscode://file/%f:%l'
-        'fileLinkFormat' => 'subl://open?url=file://%f&line=%l'
+        'fileLinkFormat'  => 'subl://open?url=file://%f&line=%l',
     ]);
 
     // Создаем экземпляр VarCloner
     $cloner = new VarCloner();
-    
+
     // Вывод дампа в браузер
     $dumper->dump($cloner->cloneVar($var));
 }); //VarDumper::setHandler
@@ -104,15 +103,13 @@ VarDumper::setHandler(function ($var) {
 
 ### конец ### отладчик Symfony\Component\VarDumper
 
-
 ### шаблонизатор Smarty 5.x
-use Smarty\Smarty;
 
 $smarty = new Smarty();
-$smarty->setTemplateDir('../admin/tpl');                        // здесь лежат шаблоны tpl.html
+$smarty->setTemplateDir('../admin/tpl'); // здесь лежат шаблоны tpl.html
 
-$smarty->setCompileDir('../admin/smarty/compile_dir'); // здесь компилируюся *.php
-$smarty->setConfigDir('../admin/smarty/smarty_config');           // незнаю
+$smarty->setCompileDir('../admin/smarty/compile_dir');  // здесь компилируюся *.php
+$smarty->setConfigDir('../admin/smarty/smarty_config'); // незнаю
 $smarty->setCacheDir('../admin/smarty/smarty_cache');
 
 $smarty->compile_id    = 'ant2025';
@@ -124,17 +121,7 @@ dump($smarty->compile_id);
 
 ### конец ### шаблонизатор Smarty 5.x
 
-$sss =2222;
-$ff=222/(100-100);
-
+$sss = 2222;
+$ff  = 222 / (100 - 100);
 
 // dd("ddd");
-
-
-
-
-
-
-
-
-
