@@ -1,4 +1,21 @@
-<?php 	
+<?php
+
+####    "installed_packages":
+####    [
+####        "Advanced CSV",
+####        "Color Highlight",
+####        "CSV",
+####        "CSV Record View",
+####        "Dark Knight Color Scheme",
+####        "HTML-CSS-JS Prettify",
+####        "HTML5",
+####        "INI",
+####        "Package Control",
+####        "phpfmt",
+####        "SideBarEnhancements",
+####        "Smarty",
+####    ],
+
 // echo "hello! admin index is here";
 
 // $dird          = dirname($_SERVER['PHP_SELF']); ## "/"
@@ -42,10 +59,7 @@
 
 */
 
-
 // https://calc-best.ru/matematicheskie/delenie-umnozhenie-pribavlenie-i-vychitanie-stolbikom/delenie-stolbikom?n1=950&n2=19
-
-
 
 // $variable = ['key' => 'value'];
 // // VarDumper::dump($variable);
