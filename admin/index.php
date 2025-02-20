@@ -242,12 +242,21 @@ $sql = "
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
     INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
     UPDATE `ant_ippost` SET ip = '192.168.1.111' WHERE title like '%D%';
 ";
+
 $testMQ->executeQueries($sql);
 echo "Количество выполненных запросов: " . $testMQ->getExecutedQueriesCount() . "\n";
 echo "Время выполнения запросов: " . $testMQ->getExecutionTime() . " секунд\n";
