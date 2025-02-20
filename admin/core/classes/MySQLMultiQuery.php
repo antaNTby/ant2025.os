@@ -66,6 +66,9 @@ class MySQLMultiQuery
 }
 
 // Пример использования класса
+
+/*
+
 $host     = 'localhost';
 $username = 'username';
 $password = 'password';
@@ -84,3 +87,5 @@ echo "Время выполнения запросов: " . $mysqlMultiQuery->ge
 echo "Вставленные ID: " . implode(', ', $mysqlMultiQuery->getInsertedIds()) . "\n";
 echo "Обновленные записи: " . implode(', ', $mysqlMultiQuery->getUpdatedRows()) . "\n";
 $mysqlMultiQuery->close();
+
+*/
