@@ -116,12 +116,9 @@ $smarty->compile_id    = 'ant2025';
 $smarty->force_compile = true;
 // $smarty->setEscapeHtml(true); //Enable auto-escaping for HTML as follows:
 $smarty->setEscapeHtml(false);
-// $smarty->testInstall();
+$smarty->testInstall();
 dump($smarty->compile_id);
 
 ### конец ### шаблонизатор Smarty 5.x
-
-$sss = 2222;
-$ff  = 222 / (100 - 100);
 
 // dd("ddd");
