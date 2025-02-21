@@ -72,3 +72,72 @@
 // }
 // $varClass = new PropertyExample();
 // dump($varClass);
+### конец ### шаблонизатор Smarty 5.x
+
+// dd("ddd");
+$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+// Проверка соединения
+if ($mysqli->connect_error) {
+    die('Ошибка подключения: ' . $mysqli->connect_error);
+}
+
+// Несколько SQL-запросов
+$sql = "
+    INSERT INTO `ant_ippost` (time_stamp,title,ip) VALUES (NOW(),'John Doe', '192.168.31.200');
+    INSERT INTO `ant_ippost` (time_stamp,title,ip) VALUES (NOW(),'Jane Smith', '192.168.31.255');
+    UPDATE `ant_ippost` SET ip = '192.168.1.111' WHERE title = 'John Doe';
+";
+
+if ($mysqli->multi_query($sql)) {
+    do {
+        // Если есть больше результатов
+        if ($result = $mysqli->store_result()) {
+            while ($row = $result->fetch_row()) {
+                printf("%s\n", $row[0]);
+            }
+            $result->free();
+        }
+        // Проверка следующего результата
+    } while ($mysqli->more_results() && $mysqli->next_result());
+} else {
+    echo "Ошибка выполнения multi-query: " . $mysqli->error;
+}
+
+// Закрытие соединения
+$mysqli->close();
+
+require_once '../classes/MySQLMultiQuery.php';
+
+$testMQ = new MySQLMultiQuery(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+$sql = "
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Baiden Old', '192.222.31.200');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    INSERT INTO `ant_ippost` (time_stamp, title, ip) VALUES (NOW(), 'Trump Dumb', '192.222.31.255');
+    UPDATE `ant_ippost` SET ip = '192.168.1.111' WHERE title like '%D%';
+";
+
+$testMQ->executeQueries($sql);
+echo "Количество выполненных запросов: " . $testMQ->getExecutedQueriesCount() . "\n";
+echo "Время выполнения запросов: " . $testMQ->getExecutionTime() . " секунд\n";
+echo "Вставленные ID: " . implode(', ', $testMQ->getInsertedIds()) . "\n";
+echo "Обновленные записи: " . implode(', ', $testMQ->getUpdatedRows()) . "\n";
+$testMQ->close();
