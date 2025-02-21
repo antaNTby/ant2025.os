@@ -1,6 +1,4 @@
 <?php
- <  ? php;
-
 /**
  * Class Toasts for php Alerts
  */

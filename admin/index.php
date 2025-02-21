@@ -127,14 +127,17 @@ https://github.com/ThingEngineer/PHP-MySQLi-Database-Class
 composer require thingengineer/mysqli-database-class:dev-master
 */
 
-require_once 'MysqliDb.php';
+require_once '../vendor/thingengineer/mysqli-database-class/MysqliDb.php';
+require_once 'core/database_connect.php';
 
 //Advanced initialization:
-$db = new MysqliDb([
-    'host'     => 'host',
-    'username' => 'username',
-    'password' => 'password',
-    'db'       => 'databaseName',
-    'port'     => 3306,
-    'prefix'   => 'my_',
-    'charset'  => 'utf8']);
+$db = new MysqliDb($sqli_connect);
+
+$db->where('company_name', '%дом%', 'like');
+$db->orWhere('company_name', '%апа%', 'like');
+$data = $db->get('companies', 2); //contains an Array 10 companies
+
+dump($data);
+dump($data[0]['company_name']);
+print_r($db->trace);
+echo "Last executed query was " . $db->getLastQuery();

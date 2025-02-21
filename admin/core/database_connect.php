@@ -16,65 +16,34 @@
 // const DB_NAME = 'db_antCMS'; //   {$smarty.const.DB_NAME}       password
 // const DB_PRFX = 'ant_';
 
-const DBMS    = 'mysqli';    //   {$smarty.const.DBMS}          database host
-const DB_HOST = 'MySQL-5.7'; //   {$smarty.const.DB_HOST}       username
-const DB_USER = 'root';      //   {$smarty.const.DB_USER}       database name
-// const DB_PASS = 'root';      //   {$smarty.const.DB_PASS}       database prefix
-const DB_PASS = '';          //   {$smarty.const.DB_PASS}       database prefix
-const DB_NAME = 'db_antCMS'; //   {$smarty.const.DB_NAME}       password
-const DB_PRFX = 'ant_';
+const DBMS              = 'mysqli';             //   {$smarty.const.DBMS}          database host   # Database Driver Type (optional)
+const DB_DRIVER         = 'mysqli';             //   {$smarty.const.DBMS}          database host   # Database Driver Type (optional)
+const DB_HOST           = 'MySQL-5.7';          //   {$smarty.const.DB_HOST}       username # hostname:port (for Port Usage. Example: 127.0.0.1:1010)
+const DB_USER           = 'root';               //   {$smarty.const.DB_USER}       database name # Database Name (required)
+const DB_PASS           = '';                   //   {$smarty.const.DB_PASS}       database prefix
+const DB_NAME           = 'db_antCMS';          //   {$smarty.const.DB_NAME}       password
+const DB_PRFX           = 'ant_';               # Database Prefix (optional)
+const DB_CHARSET        = 'utf8mb4';            # Database Charset (optional)
+const DB_HEADERSCHARSET = 'utf8';               # Database Charset (optional)
+const DB_COLLATION      = 'utf8mb4_unicode_ci'; # Database Charset Collation (optional)
+const DB_CACHEDIR       = '../admin/database/database_cache';
+const DB_PORT           = 3306;
 
 $pdo_connect = [
+    'host'           => DB_HOST,
+    'db'             => DB_NAME,
     'user'           => DB_USER,
     'pass'           => DB_PASS,
-    'db'             => DB_NAME,
-    'host'           => DB_HOST,
-    'charset'        => 'utf8mb4',
-    'headersCharset' => 'utf8',
+    'charset'        => DB_CHARSET,
+    'headersCharset' => DB_HEADERSCHARSET,
 ];
 
-$config = [
-    # Database Driver Type (optional)
-    # default value: mysql
-    # values: mysql, pgsql, sqlite, oracle
-    'driver'    => 'mysql',
-
-# Host name or IP Address (optional)
-    # hostname:port (for Port Usage. Example: 127.0.0.1:1010)
-    # default value: localhost
-    'host'      => DB_HOST,
-
-# IP Address for Database Host (optional)
-    # default value: null
-    'port'      => 3306,
-
-# Database Name (required)
-    'database'  => DB_NAME,
-
-# Database User Name (required)
-    'username'  => DB_USER,
-
-# Database User Password (required)#
-    'password'  => DB_PASS,
-
-# Database Charset (optional)
-    # default value: utf8
-    'charset'   => 'utf8mb4',
-    // 'charset'   => 'utf8',
-
-# Database Charset Collation (optional)
-    # default value: utf8_general_ci
-    'collation' => 'utf8mb4_unicode_ci',
-    // 'collation' => 'utf8_general_ci',
-
-# Database Prefix (optional)
-    # default value: null
-    // 'prefix'    => DB_PRFX,
-    'prefix'    => null,
-
-# Cache Directory of the Sql Result (optional)
-    # default value: __DIR__ . '/cache/'
-    'cachedir'  => '../admin/database/database_cache',
-    # default value: true
-    'debug'     => true,
+$sqli_connect = [
+    'host'     => DB_HOST,
+    'username' => DB_USER,
+    'password' => DB_PASS,
+    'db'       => DB_NAME,
+    'port'     => DB_PORT,
+    'prefix'   => DB_PRFX,
+    'charset'  => DB_CHARSET,
 ];

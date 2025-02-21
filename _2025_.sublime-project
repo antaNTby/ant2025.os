@@ -51,6 +51,7 @@
         "tab_size": 4,
 
 
+        "theme": "Default Dark.sublime-theme",
         // "color_scheme": "Bass Bowtruckle.sublime-color-scheme", //Color scheme Bass
         // "color_scheme": "Bass Lagoon.sublime-color-scheme",
         // "color_scheme": "Breakers.sublime-color-scheme",
@@ -62,8 +63,8 @@
         // "color_scheme": "Sixteen.sublime-color-scheme",
 
         // "font_face": "Consolas",
-        "font_face": "Fira Sans",
-        // "font_face": "Source Code Pro",
+        // "font_face": "Fira Sans",
+        "font_face": "Source Code Pro",
         // "font_face": "Intel One Mono",
         // "font_face": "Iosevka",
         // "font_face": "JetBrains Mono",
