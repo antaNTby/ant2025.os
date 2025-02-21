@@ -122,7 +122,19 @@ $smarty->testInstall();
 
 ##### MysqliDb -- Simple MySQLi wrapper and object mapper with prepared statements
 /*
-
+vendor\thingengineer\mysqli-database-class\dbObject.md
 https://github.com/ThingEngineer/PHP-MySQLi-Database-Class
 composer require thingengineer/mysqli-database-class:dev-master
 */
+
+require_once 'MysqliDb.php';
+
+//Advanced initialization:
+$db = new MysqliDb([
+    'host'     => 'host',
+    'username' => 'username',
+    'password' => 'password',
+    'db'       => 'databaseName',
+    'port'     => 3306,
+    'prefix'   => 'my_',
+    'charset'  => 'utf8']);
