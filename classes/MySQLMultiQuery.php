@@ -16,9 +16,16 @@ class MySQLMultiQuery
         }
     }
 
+    public function escapeString($string)
+    {
+        return $this->mysqli->real_escape_string($string);
+    }
+
     public function executeQueries($sql)
     {
         $startTime = microtime(true);
+
+        $sql = $this->escapeString($sql);
 
         if ($this->mysqli->multi_query($sql)) {
             do {
