@@ -139,5 +139,5 @@ $data = $db->get('companies', 2); //contains an Array 10 companies
 
 dump($data);
 dump($data[0]['company_name']);
-print_r($db->trace);
+
 echo "Last executed query was " . $db->getLastQuery();
