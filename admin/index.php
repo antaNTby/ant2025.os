@@ -119,3 +119,10 @@ $smarty->testInstall();
 // dump($smarty->compile_id);
 
 ### конец ### шаблонизатор Smarty 5.x
+
+##### MysqliDb -- Simple MySQLi wrapper and object mapper with prepared statements
+/*
+
+https://github.com/ThingEngineer/PHP-MySQLi-Database-Class
+composer require thingengineer/mysqli-database-class:dev-master
+*/

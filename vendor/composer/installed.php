@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c1ffad9ff6384d2e775a4b9c4c2abd814d1546f1',
+        'reference' => '04e7fdc2514623fdc5a1636349ba928337309e73',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c1ffad9ff6384d2e775a4b9c4c2abd814d1546f1',
+            'reference' => '04e7fdc2514623fdc5a1636349ba928337309e73',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -54,6 +54,17 @@
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'thingengineer/mysqli-database-class' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '469666dda734f0608b105944add6d544ae7f48e8',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../thingengineer/mysqli-database-class',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'dev_requirement' => false,
         ),
         'tracy/tracy' => array(
             'pretty_version' => 'v2.10.9',
