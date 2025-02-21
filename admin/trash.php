@@ -74,6 +74,8 @@
 // dump($varClass);
 ### конец ### шаблонизатор Smarty 5.x
 
+// dump($smarty->compile_id);
+
 // dd("ddd");
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
