@@ -38,12 +38,113 @@ $pdo_connect = [
     'headersCharset' => DB_HEADERSCHARSET,
 ];
 
-$sqli_connect = [
-    'host'     => DB_HOST,
-    'username' => DB_USER,
-    'password' => DB_PASS,
-    'db'       => DB_NAME,
-    'port'     => DB_PORT,
-    'prefix'   => DB_PRFX,
-    'charset'  => DB_CHARSET,
-];
+// require_once '../vendor/thingengineer/mysqli-database-class/MysqliDb.php';
+// require_once 'core/database_connect.php';
+
+// //Advanced initialization:
+// $db = new MysqliDb($sqli_connect);
+
+// $db->where('company_name', '%дом%', 'like');
+// $db->orWhere('company_name', '%апа%', 'like');
+// $data = $db->get('companies', 2); //contains an Array 10 companies
+
+// dump($data);
+// dump($data[0]['company_name']);
+
+// echo "Last executed query was " . $db->getLastQuery();
+
+/*
+
+        $dumpO = '
+        MysqliDb {#18 ▼
+          #_mysqli: []
+          #_query: null
+          #_lastQuery: null
+          #_queryOptions: []
+          #_join: []
+          #_where: []
+          #_joinAnd: []
+          #_having: []
+          #_orderBy: []
+          #_groupBy: []
+          #_tableLocks: []
+          #_tableLockMethod: "READ"
+          #_bindParams: array:1 [▼
+            0 => ""
+          ]
+          +count: 0
+          +totalCount: 0
+          #_stmtError: null
+          #_stmtErrno: null
+          #isSubQuery: false
+          #_lastInsertId: null
+          #_updateColumns: null
+          +returnType: "array"
+          #_nestJoin: false
+          -_tableName: ""
+          #_forUpdate: false
+          #_lockInShareMode: false
+          #_mapKey: null
+          #traceStartQ: 0
+          #traceEnabled: false
+          #traceStripPrefix: ""
+          +trace: []
+          +pageLimit: 20
+          +totalPages: 0
+          #connectionsSettings: array:1 [▼
+            "default" => array:7 [▼
+              "host" => "MySQL-5.7"
+              "username" => "root"
+              "password" => ""
+              "db" => "db_antCMS"
+              "port" => 3306
+              "socket" => null
+              "charset" => "utf8mb4"
+            ]
+          ]
+          +defConnectionName: "default"
+          +autoReconnect: true
+          #autoReconnectCount: 0
+          #_transaction_in_progress: false
+        }
+        ';
+
+        // dump($db);
+
+        $db->jsonBuilder();
+        $db->where('company_name', '%дом%', 'like');
+        $db->orWhere('company_name', '%апа%', 'like');
+        $data = $db->get('companies', 4); //contains an Array 10 companies
+        bdump($data);
+
+        // dump($data[0]['company_name']);
+        echo "Last executed query was " . $db->getLastQuery();
+
+        $db->objectBuilder();
+        $db->where('company_name', '%пан%', 'like');
+        $db->orWhere('company_name', '%кр%', 'like');
+        $data = $db->get('companies', 4); //contains an Array 10 companies
+        bdump($data);
+
+        $db->arrayBuilder();
+        $db->where('company_name', '%пан%', 'like');
+        $db->orWhere('company_name', '%кр%', 'like');
+        $data = $db->get('companies', 4); //contains an Array 10 companies
+        bdump($data);
+
+        $db->jsonBuilder();
+        $db->where('company_name', '%дом%', 'like');
+        $db->orWhere('company_name', '%апа%', 'like');
+        $data = $db->get('companies', 4); //contains an Array 10 companies
+        bdump($data);
+
+        $db->where('company_name', '%дом%', 'like');
+        $db->orWhere('company_name', '%апа%', 'like');
+        $data = $db->get('companies', 4); //contains an Array 10 companies
+        bdump($data);
+
+        // dump($data[0]['company_name']);
+
+        // echo "Last executed query was " . $db->getLastQuery();
+
+*/

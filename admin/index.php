@@ -3,11 +3,6 @@
 ### 2025-02-19 ####
 require '../vendor/autoload.php';
 
-/*
- * Get Tracy up and running
- * https://tracy.nette.org/
- */
-
 use Smarty\Smarty;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
@@ -128,16 +123,22 @@ composer require thingengineer/mysqli-database-class:dev-master
 */
 
 require_once '../vendor/thingengineer/mysqli-database-class/MysqliDb.php';
+
 require_once 'core/database_connect.php';
+$sqli_connect = [
+    'host'     => DB_HOST,
+    'username' => DB_USER,
+    'password' => DB_PASS,
+    'db'       => DB_NAME,
+    'port'     => DB_PORT,
+    'prefix'   => DB_PRFX,
+    'charset'  => DB_CHARSET,
+];
 
 //Advanced initialization:
 $db = new MysqliDb($sqli_connect);
 
-$db->where('company_name', '%дом%', 'like');
-$db->orWhere('company_name', '%апа%', 'like');
-$data = $db->get('companies', 2); //contains an Array 10 companies
-
-dump($data);
-dump($data[0]['company_name']);
-
-echo "Last executed query was " . $db->getLastQuery();
+// $db->where('company_name', '%дом%', 'like');
+// $db->orWhere('company_name', '%апа%', 'like');
+// $data = $db->get('companies', 4); //contains an Array 10 companies
+// bdump($data);
