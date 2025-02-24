@@ -143,3 +143,75 @@ echo "Время выполнения запросов: " . $testMQ->getExecutio
 echo "Вставленные ID: " . implode(', ', $testMQ->getInsertedIds()) . "\n";
 echo "Обновленные записи: " . implode(', ', $testMQ->getUpdatedRows()) . "\n";
 $testMQ->close();
+
+{
+    "cmd":["npm", "run", "dev"],
+    "working_dir":"$project_path",
+    "shell":true;
+}
+{
+    "cmd":["npm", "run", "build"],
+    "working_dir":"$project_path",
+    "shell":true;
+}
+C: \Users\a\AppData\Roaming\Sublime Text\Packages\User;
+
+"installed_packages":
+[
+    "Advanced CSV",
+    "Color Highlight",
+    "Color Scheme - Bass",
+    "CSV",
+    "CSV Record View",
+    "Dark Knight Color Scheme",
+    "HTML-CSS-JS Prettify",
+    "HTML5",
+    "INI",
+    "LSP",
+    "LSP-svelte",
+    "Package Control",
+    "phpfmt",
+    "ReadonlyMode",
+    "SideBarEnhancements",
+    "Smarty",
+],
+
+// Settings in here override those in "/phpfmt/phpfmt.sublime-settings",
+
+{
+    "autocomplete":false,
+    "autoimport":false,
+    "excludes":[
+        "SpaceBetweenMethods",
+    ],
+    "format_on_save":true,
+    "passes":
+    [
+        "AlignDoubleArrow",
+        "AlignPHPCode",
+        "SpaceAfterExclamationMark",
+        "AlignConstVisibilityEquals",
+        "AutoSemicolon",
+        "ConvertOpenTagWithEcho",
+        "AlignSuperEquals",
+        "MergeNamespaceWithOpenTag",
+        "RemoveSemicolonAfterCurly",
+        "RestoreComments",
+        "ShortArray",
+        "ExtraCommaInArray",
+        "AlignDoubleSlashComments",
+
+        "AlignEquals",
+        "AlignGroupDoubleArrow",
+
+    ],
+    "php_bin":"c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",
+    /*"php_bin": "c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",*/
+    "psr1":false,
+    "psr1_naming":false,
+    "psr2":true,
+    "readini":true,
+    "smart_linebreak_after_curly":false,
+    "version":4,
+    "wp":false,
+}
