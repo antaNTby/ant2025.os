@@ -164,8 +164,8 @@ function regAuthenticate(
     $db->where("Login", trim($login));
 
     $cols = ["cust_password", "CID", "ActivationCode"];
-    $row  = $db->getOne('customers', null, $cols); //contains an Array of all users
-
+    $row  = $db->getOne('customers', "cust_password, CID, ActivationCode"); //contains an Array of all users
+    dd($row);
     bdump($row);
 
     if (($db->count > 0) && (strlen(trim($login)) > 0)) {
@@ -177,9 +177,11 @@ function regAuthenticate(
             $_SESSION["current_currency"] = $row["CID"];
 
             // update statistic
-            stAddCustomerLog($login);
+            // stAddCustomerLog($login);
             // move cart content into DB
-            moveCartFromSession2DB();
+            // moveCartFromSession2DB();
+            bdump($_SESSION);
+
             return true;
         } else {
             return false;
