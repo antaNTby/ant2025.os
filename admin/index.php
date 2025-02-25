@@ -31,7 +31,16 @@ Debugger::$maxLength = 80; // default: 150
 // Debugger::$editor = /* ... */; // (string|null) по умолчанию 'editor://open/?file=%file&line=%line'
 Debugger::$editor = 'subl://open?file=%file&line=%line';
 
+// Debugger::enable();
+
+Debugger::setSessionStorage(new Tracy\NativeSession);
 Debugger::enable();
+
+// followed by session initialization
+// and start the session
+session_start();
+
+Debugger::dispatch();
 
 // пример вывода в плавающем окне
 //            bdump([1, 3, 5, 7, 9], 'odd numbers up to ten');
