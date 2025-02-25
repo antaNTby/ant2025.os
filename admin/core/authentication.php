@@ -8,9 +8,6 @@ session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', '
 
 session_set_cookie_params(SECURITY_EXPIRE);
 
-# стартуем сессию
-session_start();
-
 # посылаем cookie сессии
 if (isset($_COOKIE['PHPSESSID'])) {
     if (SECURITY_EXPIRE > 0) {

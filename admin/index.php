@@ -36,12 +36,6 @@ Debugger::$editor = 'subl://open?file=%file&line=%line';
 Debugger::setSessionStorage(new Tracy\NativeSession);
 Debugger::enable();
 
-// followed by session initialization
-// and start the session
-session_start();
-
-Debugger::dispatch();
-
 // пример вывода в плавающем окне
 //            bdump([1, 3, 5, 7, 9], 'odd numbers up to ten');
 
@@ -170,6 +164,13 @@ require_once PATH_CORE . 'headers.php';
 require_once PATH_CORE . 'tables.php';
 
 include_once PATH_CORE . 'authentication.php';
+
+// followed by session initialization
+// and start the session
+# стартуем сессию
+session_start();
+
+Debugger::dispatch();
 
 ###
 
