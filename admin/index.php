@@ -146,8 +146,6 @@ $db = new MysqliDb($sqli_connect);
 // $data = $db->get('companies', 4); //contains an Array 10 companies
 // bdump($data);
 
-# сбрасываем время сессии
-session_cache_expire();
 #########
 #########
 #########
@@ -163,8 +161,12 @@ require_once PATH_CORE . 'functions.php';
 require_once PATH_CORE . 'headers.php';
 require_once PATH_CORE . 'tables.php';
 
+$smarty->assign('admin_main_content_template', 'error_forbidden_login.tpl.html.tpl.html');
 include_once PATH_CORE . 'authentication.php';
 
+bdump($_SESSION);
+# сбрасываем время сессии
+session_cache_expire();
 // followed by session initialization
 // and start the session
 # стартуем сессию

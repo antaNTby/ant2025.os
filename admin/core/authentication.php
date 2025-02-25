@@ -1,13 +1,12 @@
 <?php
 ### authentication.php
-
 define('SECURITY_EXPIRE', 60 * 60 * CONF_SECURITY_EXPIRE);
 $LOG_OK = false;
 
 session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy', 'sess_gc');
-
 session_set_cookie_params(SECURITY_EXPIRE);
 
+// dd($_SESSION);
 # посылаем cookie сессии
 if (isset($_COOKIE['PHPSESSID'])) {
     if (SECURITY_EXPIRE > 0) {
@@ -25,17 +24,8 @@ $relaccess = checklogin();
 
 if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
 
-    if (isset($_POST['user_login']) && isset($_POST['user_pw']))
-    // if (isset($_POST['user_login']))
+    if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
 
-    {
-
-        // включено подтверждение регистрации
-        if (regAuthenticate($_POST['user_login'], $_POST['user_pw'])) {
-
-            Redirect(set_query('&__tt='));
-
-        }
         die(ERROR_FORBIDDEN_LOGIN);
     }
 
