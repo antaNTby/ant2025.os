@@ -142,3 +142,41 @@ $db = new MysqliDb($sqli_connect);
 // $db->orWhere('company_name', '%апа%', 'like');
 // $data = $db->get('companies', 4); //contains an Array 10 companies
 // bdump($data);
+
+# сбрасываем время сессии
+session_cache_expire();
+#########
+#########
+#########
+#########
+#########
+const PATH_CORE = 'core/';
+
+require_once PATH_CORE . 'const.php'; // управляющие и служебные константы
+
+require_once PATH_CORE . 'orklang.php';  // строки текста
+require_once PATH_CORE . 'settings.php'; // настройки
+require_once PATH_CORE . 'functions.php';
+require_once PATH_CORE . 'headers.php';
+require_once PATH_CORE . 'tables.php';
+
+include_once PATH_CORE . 'authentication.php';
+
+###
+
+$_POST   = stripslashes_deep($_POST);
+$_GET    = stripslashes_deep($_GET);
+$_COOKIE = stripslashes_deep($_COOKIE);
+
+//define start smarty template
+$smarty->assign('admin_main_content_template', 'start.tpl.html');
+
+### define department and subdepartment
+// include_once PATH_CORE . 'departments.php';
+
+// include_once PATH_CORE . 'admin_end.php';
+
+// или вход или введите пароль
+if (isset($_SESSION['log'])) {
+    $smarty->assign('adminlogname', $_SESSION['log']);
+}
