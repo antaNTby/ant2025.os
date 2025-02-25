@@ -126,8 +126,9 @@ composer require thingengineer/mysqli-database-class:dev-master
 */
 
 require_once '../vendor/thingengineer/mysqli-database-class/MysqliDb.php';
+const PATH_CORE = 'core/';
 
-require_once 'core/database_connect.php';
+require_once PATH_CORE . 'database_connect.php';
 $sqli_connect = [
     'host'     => DB_HOST,
     'username' => DB_USER,
@@ -151,7 +152,6 @@ $db = new MysqliDb($sqli_connect);
 #########
 #########
 #########
-const PATH_CORE = 'core/';
 
 require_once PATH_CORE . 'const.php'; // управляющие и служебные константы
 
