@@ -16,8 +16,8 @@ const ADMIN_SMARTY_LOG_VARS = 0;                      //   {$smarty.const.ADMIN_
 
 const ERROR_DB_INIT = SITE_URL . ' :: ' . 'Database connection problem!'; //   {$smarty.const.ERROR_DB_INIT} database system
 
-const LOGO256 = '/static/logo256.jpg'; //   {$smarty.const.LOGO256}
-const LOGO64  = '/static/logo64.jpg';  //   {$smarty.const.LOGO64}
+const LOGO256 = 'logo256.jpg'; //   {$smarty.const.LOGO256}
+const LOGO64  = 'logo64.jpg';  //   {$smarty.const.LOGO64}
 
 const PATH_INCLUDES = 'core/includes/';
 
@@ -35,7 +35,7 @@ const ERROR_FORBIDDEN = '<!doctype html>
 <!--[if IE]><meta content="IE=edge,chrome=1"http-equiv=X-UA-Compatible><![endif]-->
 <meta content="IE=edge" http-equiv="X-UA-Compatible">
 <meta content="width=device-width,initial-scale=1" name="viewport">
-<link href="/static/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
 <title>Welcome to ' . SITE_URL . ' -ERROR_FORBIDDEN-</title>
 <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css">
@@ -81,14 +81,16 @@ function show_hide_password(t) {
 }
 </script>
 </body>
+</html>
 ';
+
 const ERROR_FORBIDDEN_LOGIN = '<!doctype html>
 <html lang="ru">
 <meta charset="utf-8">
 <!--[if IE]><meta content="IE=edge,chrome=1"http-equiv=X-UA-Compatible><![endif]-->
 <meta content="IE=edge" http-equiv="X-UA-Compatible">
 <meta content="width=device-width,initial-scale=1" name="viewport">
-<link href="/static/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
 <title>Welcome to ' . SITE_URL . '</title>
 <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css">
@@ -131,4 +133,6 @@ function show_hide_password(t) {
     var e = document.getElementById("user_pw");
     return "password" == e.getAttribute("type") ? (t.classList.add("view"), e.setAttribute("type", "text")) : (t.classList.remove("view"), e.setAttribute("type", "password")), !1
 }
-</script>';
+</script>
+</body>
+</html>';

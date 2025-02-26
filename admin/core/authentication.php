@@ -1,10 +1,5 @@
 <?php
 ### authentication.php
-define('SECURITY_EXPIRE', 60 * 60 * CONF_SECURITY_EXPIRE);
-$LOG_OK = false;
-
-session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy', 'sess_gc');
-session_set_cookie_params(SECURITY_EXPIRE);
 
 // dd($_SESSION);
 # посылаем cookie сессии
@@ -23,12 +18,9 @@ if (isset($_COOKIE['PHPSESSID'])) {
 $relaccess = checklogin();
 
 if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
-
     if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
-
         die(ERROR_FORBIDDEN_LOGIN);
     }
-
     $wrongLoginOrPw = 1;
     die(ERROR_FORBIDDEN);
 } else {

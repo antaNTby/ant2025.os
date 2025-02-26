@@ -33,8 +33,7 @@ Debugger::$editor = 'subl://open?file=%file&line=%line';
 
 // Debugger::enable();
 
-Debugger::setSessionStorage(new Tracy\NativeSession);
-Debugger::enable();
+// Debugger::setSessionStorage(new Tracy\NativeSession);
 
 // пример вывода в плавающем окне
 //            bdump([1, 3, 5, 7, 9], 'odd numbers up to ten');
@@ -112,7 +111,7 @@ $smarty->compile_id    = 'ant2025';
 $smarty->force_compile = true;
 // $smarty->setEscapeHtml(true); //Enable auto-escaping for HTML as follows:
 $smarty->setEscapeHtml(false);
-$smarty->testInstall();
+// $smarty->testInstall();
 
 // dump($smarty->compile_id);
 
@@ -161,10 +160,74 @@ require_once PATH_CORE . 'functions.php';
 require_once PATH_CORE . 'headers.php';
 require_once PATH_CORE . 'tables.php';
 
-$smarty->assign('admin_main_content_template', 'error_forbidden_login.tpl.html.tpl.html');
-include_once PATH_CORE . 'authentication.php';
+Debugger::enable();
+Debugger::dispatch();
 
-bdump($_SESSION);
+$LOG_OK = false;
+define('SECURITY_EXPIRE', 60 * 60 * CONF_SECURITY_EXPIRE);
+$smarty->display('error_forbidden_login.tpl.html');
+
+// include_once PATH_CORE . 'authentication.php';
+if (isset($_COOKIE['PHPSESSID'])) {
+    if (SECURITY_EXPIRE > 0) {
+        set_cookie('PHPSESSID', $_COOKIE['PHPSESSID'], time() + SECURITY_EXPIRE);
+    } else {
+        set_cookie('PHPSESSID', $_COOKIE['PHPSESSID']);
+    }
+}
+
+function checkLoginMe()
+{
+    // cls();
+    $rls = [];
+
+    //look for user in the database
+    if (isset($_SESSION['log'])) {
+
+        // $q   = db_query('SELECT cust_password, actions FROM ' . CUSTOMERS_TABLE . " WHERE Login='" . trim($_SESSION['log']) . "'");
+        // $row = db_fetch_row($q);
+
+        $db = MysqliDb::getInstance();
+        $db->where("Login", trim($_SESSION['log']));
+        $row = $db->getOne('customers', "cust_password, actions");
+        dump($row);
+        //found customer - check password
+        //unauthorized access
+        if (! $row || ! isset($_SESSION['pass']) || $row[0] != $_SESSION['pass']) {
+            unset($_SESSION['log']);
+            unset($_SESSION['pass']);
+        } else {
+            $rls = unserialize($row[1]);
+            unset($row);
+            # fix log errors WARNING: in_array() expects parameter 2 to be array, boolean given
+            if (! is_array($rls)) {
+                $rls = [];
+            }
+        }
+    }
+    return $rls;
+}
+
+$relaccess = checkLoginMe();
+dd($relaccess);
+
+if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
+    if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
+        die(ERROR_FORBIDDEN_LOGIN);
+    }
+    $wrongLoginOrPw = 1;
+    die(ERROR_FORBIDDEN);
+} else {
+    $LOG_OK = true;
+}
+
+session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy', 'sess_gc');
+session_set_cookie_params(SECURITY_EXPIRE);
+
+$_POST   = stripslashes_deep($_POST);
+$_GET    = stripslashes_deep($_GET);
+$_COOKIE = stripslashes_deep($_COOKIE);
+
 # сбрасываем время сессии
 session_cache_expire();
 // followed by session initialization
@@ -172,13 +235,9 @@ session_cache_expire();
 # стартуем сессию
 session_start();
 
-Debugger::dispatch();
+// bdump($_SESSION);
 
 ###
-
-$_POST   = stripslashes_deep($_POST);
-$_GET    = stripslashes_deep($_GET);
-$_COOKIE = stripslashes_deep($_COOKIE);
 
 //define start smarty template
 $smarty->assign('admin_main_content_template', 'start.tpl.html');
