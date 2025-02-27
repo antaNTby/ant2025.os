@@ -17,9 +17,9 @@ Debugger::$showLocation = true; // Shows all additional location information
 // отображает беззвучные (@) сообщения об ошибках
 Debugger::$scream = E_ALL; /* ... */; // (bool|int) по умолчанию false, с версии 2.9 можно выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
 // скрывать значения этих ключей (начиная с версии Tracy 2.8)
-Debugger::$keysToHide = ['password' /* ... */]; // (string[]) по умолчанию []
+// Debugger::$keysToHide = ['password' /* ... */]; // (string[]) по умолчанию []
 
-Debugger::$logDirectory = 'C:/tmp';
+Debugger::$logDirectory = __DIR__ . '/debuggerLog';
 
 // Debugger::$dumpTheme = 'dark';
 Debugger::$dumpTheme = 'light';
@@ -29,11 +29,11 @@ Debugger::$maxLength = 80; // default: 150
 
 // формат ссылки для открытия в редакторе
 // Debugger::$editor = /* ... */; // (string|null) по умолчанию 'editor://open/?file=%file&line=%line'
-Debugger::$editor = 'subl://open?file=%file&line=%line';
-
+// Debugger::$editor = 'subl://open?file=%file&line=%line';
+Debugger::$editor = 'editor://open/?file=%file&line=%line';
 // Debugger::enable();
-
 // Debugger::setSessionStorage(new Tracy\NativeSession);
+// Debugger::dispatch();
 
 // пример вывода в плавающем окне
 //            bdump([1, 3, 5, 7, 9], 'odd numbers up to ten');
@@ -55,6 +55,7 @@ Debugger::$editor = 'subl://open?file=%file&line=%line';
 ### https://symfony.com/doc/current/components/var_dumper.html#using-the-vardumper-component-in-your-phpunit-test-suite
 
 // Установка обработчика дампа
+
 VarDumper::setHandler(function ($var) {
     // Создаем экземпляр HtmlDumper
     $dumper = new HtmlDumper();
@@ -125,129 +126,5 @@ composer require thingengineer/mysqli-database-class:dev-master
 */
 
 require_once '../vendor/thingengineer/mysqli-database-class/MysqliDb.php';
-const PATH_CORE = 'core/';
 
-require_once PATH_CORE . 'database_connect.php';
-$sqli_connect = [
-    'host'     => DB_HOST,
-    'username' => DB_USER,
-    'password' => DB_PASS,
-    'db'       => DB_NAME,
-    'port'     => DB_PORT,
-    'prefix'   => DB_PRFX,
-    'charset'  => DB_CHARSET,
-];
-
-//Advanced initialization:
-$db = new MysqliDb($sqli_connect);
-
-// $db->where('company_name', '%дом%', 'like');
-// $db->orWhere('company_name', '%апа%', 'like');
-// $data = $db->get('companies', 4); //contains an Array 10 companies
-// bdump($data);
-
-#########
-#########
-#########
-#########
-#########
-
-require_once PATH_CORE . 'const.php'; // управляющие и служебные константы
-
-require_once PATH_CORE . 'orklang.php';  // строки текста
-require_once PATH_CORE . 'settings.php'; // настройки
-require_once PATH_CORE . 'functions.php';
-require_once PATH_CORE . 'headers.php';
-require_once PATH_CORE . 'tables.php';
-
-Debugger::enable();
-Debugger::dispatch();
-
-$LOG_OK = false;
-define('SECURITY_EXPIRE', 60 * 60 * CONF_SECURITY_EXPIRE);
-$smarty->display('error_forbidden_login.tpl.html');
-
-// include_once PATH_CORE . 'authentication.php';
-if (isset($_COOKIE['PHPSESSID'])) {
-    if (SECURITY_EXPIRE > 0) {
-        set_cookie('PHPSESSID', $_COOKIE['PHPSESSID'], time() + SECURITY_EXPIRE);
-    } else {
-        set_cookie('PHPSESSID', $_COOKIE['PHPSESSID']);
-    }
-}
-
-function checkLoginMe()
-{
-    // cls();
-    $rls = [];
-
-    //look for user in the database
-    if (isset($_SESSION['log'])) {
-
-        // $q   = db_query('SELECT cust_password, actions FROM ' . CUSTOMERS_TABLE . " WHERE Login='" . trim($_SESSION['log']) . "'");
-        // $row = db_fetch_row($q);
-
-        $db = MysqliDb::getInstance();
-        $db->where("Login", trim($_SESSION['log']));
-        $row = $db->getOne('customers', "cust_password, actions");
-        dump($row);
-        //found customer - check password
-        //unauthorized access
-        if (! $row || ! isset($_SESSION['pass']) || $row[0] != $_SESSION['pass']) {
-            unset($_SESSION['log']);
-            unset($_SESSION['pass']);
-        } else {
-            $rls = unserialize($row[1]);
-            unset($row);
-            # fix log errors WARNING: in_array() expects parameter 2 to be array, boolean given
-            if (! is_array($rls)) {
-                $rls = [];
-            }
-        }
-    }
-    return $rls;
-}
-
-$relaccess = checkLoginMe();
-dd($relaccess);
-
-if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
-    if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
-        die(ERROR_FORBIDDEN_LOGIN);
-    }
-    $wrongLoginOrPw = 1;
-    die(ERROR_FORBIDDEN);
-} else {
-    $LOG_OK = true;
-}
-
-session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy', 'sess_gc');
-session_set_cookie_params(SECURITY_EXPIRE);
-
-$_POST   = stripslashes_deep($_POST);
-$_GET    = stripslashes_deep($_GET);
-$_COOKIE = stripslashes_deep($_COOKIE);
-
-# сбрасываем время сессии
-session_cache_expire();
-// followed by session initialization
-// and start the session
-# стартуем сессию
-session_start();
-
-// bdump($_SESSION);
-
-###
-
-//define start smarty template
-$smarty->assign('admin_main_content_template', 'start.tpl.html');
-
-### define department and subdepartment
-// include_once PATH_CORE . 'departments.php';
-
-// include_once PATH_CORE . 'admin_end.php';
-
-// или вход или введите пароль
-if (isset($_SESSION['log'])) {
-    $smarty->assign('adminlogname', $_SESSION['log']);
-}
+require_once 'admin.php';
