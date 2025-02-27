@@ -35,6 +35,7 @@ require_once PATH_CORE . 'tables.php';
 
 $LOG_OK = false;
 define('SECURITY_EXPIRE', 60 * 60 * CONF_SECURITY_EXPIRE);
+require_once PATH_CORE . 'loginHtml.php'; // управляющие и служебные константы
 
 // $smarty->display('error_forbidden_login.tpl.html');
 
@@ -62,13 +63,12 @@ session_start();
 // bdump($_SESSION);
 $relaccess = checkLoginMe();
 // dd($relaccess);
+dump($_SESSION);
+dump($_COOKIE);
 
 if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
     $wrongLoginOrPw = 1;
-    $smarty->assign('log_error',
-        '<div class="alert alert-danger d-flex align-items-center my-5" role="alert"><div>Access Denied<div></div>'
-    );
-    $smarty->display('error_forbidden_login.tpl.html');
+    die(ERROR_FORBIDDEN);
 } else {
     $LOG_OK = true;
 //define start smarty template
