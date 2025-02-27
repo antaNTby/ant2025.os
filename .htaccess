@@ -1,0 +1,14 @@
+Options +FollowSymlinks -MultiViews +Indexes
+DirectoryIndex index.php
+
+
+##2025##
+Header add Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type, cache-control, if-modified-since"
+Header add Access-Control-Allow-Methods "HEAD, GET, POST, PUT, OPTIONS"
+##2025##
+
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>

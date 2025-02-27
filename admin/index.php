@@ -11,11 +11,11 @@ use Tracy\Debugger;
 
 // в режиме разработки вы будете видеть уведомления или предупреждения об ошибках как BlueScreen
 // Debugger::$strictMode = E_ALL; /* ... */; // (bool|int) по умолчанию false, вы можете выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
-Debugger::$strictMode = true; // display all errors
+// Debugger::$strictMode = true; // display all errors
 // Debugger::$strictMode = E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED; // all errors except deprecated notices
-Debugger::$showLocation = true; // Shows all additional location information
+// Debugger::$showLocation = true; // Shows all additional location information
 // отображает беззвучные (@) сообщения об ошибках
-Debugger::$scream = E_ALL; /* ... */; // (bool|int) по умолчанию false, с версии 2.9 можно выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
+// Debugger::$scream = E_ALL; /* ... */; // (bool|int) по умолчанию false, с версии 2.9 можно выбрать только определенные уровни ошибок (например, E_USER_DEPRECATED | E_DEPRECATED)
 // скрывать значения этих ключей (начиная с версии Tracy 2.8)
 // Debugger::$keysToHide = ['password' /* ... */]; // (string[]) по умолчанию []
 
@@ -49,13 +49,12 @@ Debugger::$editor = 'editor://open/?file=%file&line=%line';
 //            $elapsed = Debugger::timer();
 //            // $elapsed = 2
 //            echo $elapsed;
-//            dump( $elapsed);
+//            dump($elapsed);
 
 ### отладчик Symfony\Component\VarDumper
 ### https://symfony.com/doc/current/components/var_dumper.html#using-the-vardumper-component-in-your-phpunit-test-suite
 
 // Установка обработчика дампа
-
 VarDumper::setHandler(function ($var) {
     // Создаем экземпляр HtmlDumper
     $dumper = new HtmlDumper();
