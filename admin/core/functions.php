@@ -2,7 +2,7 @@
 ### ФУНКЦИИ
 include_once 'functions/crypto_functions.php';
 include_once 'functions/registration_functions.php';
-include_once 'functions/session_functions.php';
+// include_once 'functions/session_functions.php';
 include_once 'functions/debug_functions.php';
 include_once 'functions/admin_functions.php';
 include_once 'functions/adminUI_functions.php';
@@ -13,12 +13,9 @@ function php_gd()
     phpinfo(8);
     $module_info = ob_get_contents();
     ob_end_clean();
-    if (preg_match("/\bgd\s+version\b[^\d\n\r]+?([\d\.]+)/i", $module_info, $matches))
-    {
+    if (preg_match("/\bgd\s+version\b[^\d\n\r]+?([\d\.]+)/i", $module_info, $matches)) {
         $gdversion = $matches[1];
-    }
-    else
-    {
+    } else {
         $gdversion = 0;
     }
     return $gdversion;
@@ -33,7 +30,7 @@ function db_version()
 function get_microtime()
 {
     $t         = explode(' ', microtime());
-    $timestamp = date('Y-m-d H:i:s', $t[1]) . substr((string)$t[0], 1, 4);
+    $timestamp = date('Y-m-d H:i:s', $t[1]) . substr((string) $t[0], 1, 4);
     return $timestamp;
 }
 
@@ -47,12 +44,9 @@ function gmts()
 function fix_directory_separator($str)
 {
 
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-    {
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
         $str = str_replace('/', DIRECTORY_SEPARATOR, $str);
-    }
-    else
-    {
+    } else {
         $str = str_replace('\\', DIRECTORY_SEPARATOR, $str);
     }
 
@@ -62,18 +56,12 @@ function fix_directory_separator($str)
 function key_compare_func(
     $key1,
     $key2
-)
-{
-    if ($key1 == $key2)
-    {
+) {
+    if ($key1 == $key2) {
         return 0;
-    }
-    elseif ($key1 > $key2)
-    {
+    } elseif ($key1 > $key2) {
         return 1;
-    }
-    else
-    {
+    } else {
         return -1;
     }
 }
@@ -83,20 +71,13 @@ function key_compare_func(
  */
 function format_size($file_size)
 {
-    if ($file_size >= 1073741824)
-    {
+    if ($file_size >= 1073741824) {
         $file_size = round($file_size / 1073741824 * 100) / 100 . ' Gb';
-    }
-    elseif ($file_size >= 1048576)
-    {
+    } elseif ($file_size >= 1048576) {
         $file_size = round($file_size / 1048576 * 100) / 100 . ' Mb';
-    }
-    elseif ($file_size >= 1024)
-    {
+    } elseif ($file_size >= 1024) {
         $file_size = round($file_size / 1024 * 100) / 100 . ' Kb';
-    }
-    else
-    {
+    } else {
         $file_size = $file_size . ' b';
     }
 
@@ -108,36 +89,26 @@ function format_size($file_size)
  */
 function get_dir_size($directory)
 {
-    if ( ! is_dir($directory))
-    {
+    if (! is_dir($directory)) {
         return 0;
     }
 
     $size = 0;
 
-    if ($DIR = opendir($directory))
-    {
-        while (($dirfile = readdir($DIR)) !== false)
-        {
-            if (@is_link($directory . '/' . $dirfile) || $dirfile == '.' || $dirfile == '..')
-            {
+    if ($DIR = opendir($directory)) {
+        while (($dirfile = readdir($DIR)) !== false) {
+            if (@is_link($directory . '/' . $dirfile) || $dirfile == '.' || $dirfile == '..') {
                 continue;
             }
 
-            if (@is_file($directory . '/' . $dirfile))
-            {
+            if (@is_file($directory . '/' . $dirfile)) {
                 $size += filesize($directory . '/' . $dirfile);
-            }
-            elseif (@is_dir($directory . '/' . $dirfile))
-            {
+            } elseif (@is_dir($directory . '/' . $dirfile)) {
                 $dirSize = get_dir_size($directory . '/' . $dirfile);
 
-                if ($dirSize >= 0)
-                {
+                if ($dirSize >= 0) {
                     $size += $dirSize;
-                }
-                else
-                {
+                } else {
                     return -1;
                 }
             }
@@ -153,8 +124,7 @@ function get_mime_type($file)
 {
     $file_extension = strtolower(mb_substr(strrchr($file, '.'), 1));
 
-    switch ($file_extension)
-    {
+    switch ($file_extension) {
         case 'psd':
             $ctype = 'image/x-photoshop';
             break;
@@ -319,36 +289,31 @@ function get_mime_type($file)
 function file_download(
     $filename,
     $retbytes = true
-)
-{
+) {
     $chunksize = 1 * (1024 * 1024);
     $buffer    = '';
     $cnt       = 0;
 
     $handle = fopen($filename, 'rb');
 
-    if ($handle === false)
-    {
+    if ($handle === false) {
         return false;
     }
-    while ( ! feof($handle))
-    {
+    while (! feof($handle)) {
         $buffer = fread($handle, $chunksize);
 
         echo $buffer;
 
         flush();
 
-        if ($retbytes)
-        {
+        if ($retbytes) {
             $cnt += strlen($buffer);
         }
     }
 
     $status = fclose($handle);
 
-    if ($retbytes && $status)
-    {
+    if ($retbytes && $status) {
         return $cnt;
     }
 
@@ -368,8 +333,7 @@ function is_php_code($check_code)
         strpos($check_code, '<script language="php">') !== false ||
         strpos($check_code, 'language="php"') !== false ||
         strpos($check_code, "language='php'") !== false ||
-        strpos($check_code, 'language=php') !== false)
-    {
+        strpos($check_code, 'language=php') !== false) {
         return true;
     }
 
@@ -378,10 +342,8 @@ function is_php_code($check_code)
 
 function check_permission_acp($perm)
 {
-    if ( ! check_permission($perm))
-    {
-        if ( ! defined('NOPERM'))
-        {
+    if (! check_permission($perm)) {
+        if (! defined('NOPERM')) {
             define('NOPERM', 1);
         }
 
@@ -394,11 +356,9 @@ function check_permission_acp($perm)
 function pluck(
     $a,
     $prop
-)
-{
+) {
     $out = [];
-    for ($i = 0, $len = count($a); $i < $len; $i++)
-    {
+    for ($i = 0, $len = count($a); $i < $len; $i++) {
         $out[] = $a[$i][$prop];
     }
     return $out;
@@ -408,12 +368,10 @@ function idxCol(
     $columns,
     $needle,
     $prop = "dt"
-)
-{
+) {
     $keys  = pluck($columns, $prop);
     $index = 0;
-    if (($i = array_search($needle, ($keys))) !== false)
-    {
+    if (($i = array_search($needle, ($keys))) !== false) {
         $index = $i;
     }
     return $index;

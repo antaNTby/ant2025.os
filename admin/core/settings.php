@@ -10,6 +10,4 @@ const ADMIN_SMARTY_FORCE_COMPILE = 1; //   {$smarty.const.ADMIN_SMARTY_FORCE_COM
 const ADMIN_CONTAINER_WIDTH    = 'container-lg'; //    {$smarty.const.ADMIN_CONTAINER_WIDTH}
 const ADMIN_TOAST_PLACEMENT_ID = 2;              //    {$smarty.const.ADMIN_TOAST_PLACEMENT_ID} top-0 end-0
 
-const CONF_SECURE_SESSIONS = 1; //   {$smarty.const.CONF_SECURE_SESSIONS}  Использовать безопасные сессии    При использовании данной опции ip адрес и поле user_agent будут сверяться с начальным значением при старте сессии
-
 const CONF_ENABLE_REGCONFIRMATION = 0; //Требовать активацию учетной записи покупателя после регистрации Если данная опция включена, покупателю будет отправляться по электронной почте ключ активации, который он должен ввести после заполнения регистрационной формы. Это позволяет проверять правильность ввода электронного адреса

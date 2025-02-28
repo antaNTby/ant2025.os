@@ -18,6 +18,7 @@ require_once __DIR__ . '/admin/index.php';
 session_cache_expire();
 Tracy\Debugger::setSessionStorage(new Tracy\NativeSession);
 Tracy\Debugger::enable();
+Tracy\Debugger::timer();
 
 ### шаблонизатор Smarty 5.x
 use Smarty\Smarty;

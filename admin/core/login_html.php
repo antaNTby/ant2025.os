@@ -2,10 +2,8 @@
 
 function checkLoginMe()
 {
-    // cls();
-    $rls = [];
-    // bdump(__DIR__);
 
+    $rls = [];
     //look for user in the database
     if (isset($_SESSION['log'])) {
 

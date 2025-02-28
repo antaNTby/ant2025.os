@@ -3,7 +3,8 @@
 ### 2025-02-19 ####
 
 const CONF_SECURITY_EXPIRE = 12; //   {$smarty.const.CONF_SECURITY_EXPIRE}
-const CONF_SECURE_SESSIONS = 1;  //   {$smarty.const.CONF_SECURE_SESSIONS}
+const CONF_SECURE_SESSIONS = 1;  //   {$smarty.const.CONF_SECURE_SESSIONS}  Использовать безопасные сессии    При использовании данной опции ip адрес и поле user_agent будут сверяться с начальным значением при старте сессии
+
 define('SECURITY_EXPIRE', 60 * 60 * CONF_SECURITY_EXPIRE);
 
 const PATH_CORE = 'admin/core/';
@@ -52,7 +53,7 @@ function sess_read($key)
             $db->where('id', $key);
             // $db->delete('session');
             if ($db->delete('session')) {
-                dump('successfully deleted');
+                bdump('successfully deleted');
             }
         }
     }
@@ -77,9 +78,9 @@ function sess_write(
     $id = $db->replace('session', $data);
 
     if ($db->replace('session', $data)) {
-        echo $db->count . 'records wereupdated' . '::' . $id;
+        bdump($db->count . 'records were updated' . '::' . $id);
     } else {
-        echo 'replace failed: ' . $db->getLastError();
+        bdump('replace failed: ' . $db->getLastError());
     }
 
     return true;
@@ -119,6 +120,23 @@ function stGetCustomerIP_Address()
     $ip = ($_SERVER['REMOTE_ADDR'] != '') ? $_SERVER['REMOTE_ADDR'] : 0;
     $ip = (preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/is", $ip)) ? $ip : 0;
     return $ip;
+}
+
+function set_cookie(
+    $Name,
+    $Value = '',
+    $Expires = '',
+    $Secure = false,
+    $Path = '',
+    $Domain = '',
+    $HTTPOnly = false
+) {
+    header('Set-Cookie: ' . rawurlencode($Name) . '=' . rawurlencode($Value)
+        . (empty($Expires) ? '' : ' ; expires=' . gmdate('D, d-M-Y H:i:s', $Expires) . ' GMT')
+        . (empty($Path) ? '' : ' ; path=' . $Path)
+        . (empty($Domain) ? '' : ' ; domain=' . $Domain)
+        . (! $Secure ? ' ; flavor=choco; SameSite=Lax' : ' ; SameSite=None; Secure ')
+        . (! $HTTPOnly ? '' : '; HttpOnly'), false);
 }
 
 session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy', 'sess_gc');
