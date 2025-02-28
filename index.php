@@ -1,47 +1,41 @@
 <?php
-#### index.php ####
-### 2025-02-19 ####
-// echo "hello! root index is here";
+require __DIR__ . '/vendor/autoload.php';
 
-// Settings in here override those in "/phpfmt/phpfmt.sublime-settings",
-/*
-{
-    "autocomplete":false,
-    "autoimport":false,
-    "excludes":[
-        "SpaceBetweenMethods",
-    ],
-    "format_on_save":true,
-    "passes":
-    [
-        "AlignDoubleArrow",
-        "AlignPHPCode",
-        "SpaceAfterExclamationMark",
-        "AlignConstVisibilityEquals",
-        "AutoSemicolon",
-        "ConvertOpenTagWithEcho",
-        "AlignSuperEquals",
-        "MergeNamespaceWithOpenTag",
-        "RemoveSemicolonAfterCurly",
-        "RestoreComments",
-        "ShortArray",
-        "ExtraCommaInArray",
-        "AlignDoubleSlashComments",
+Tracy\Debugger::$logDirectory = __DIR__ . '/debuggerLog';
+// Tracy\Debugger::$dumpTheme = 'dark';
+Tracy\Debugger::$dumpTheme = 'light';
+Tracy\Debugger::$showBar   = true;
+Tracy\Debugger::$maxDepth  = 2;  // default: 3
+Tracy\Debugger::$maxLength = 80; // default: 150
+Tracy\Debugger::$editor    = "editor://open/?file=%file&line=%line";
 
-        "AlignEquals",
-        "AlignGroupDoubleArrow",
+require_once __DIR__ . '/vendor/thingengineer/mysqli-database-class/MysqliDb.php';
 
-    ],
-    "php_bin":"c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",
-    "php_bin":"c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",
-    "psr1":false,
-    "psr1_naming":false,
-    "psr2":true,
-    "readini":true,
-    "smart_linebreak_after_curly":false,
-    "version":4,
-    "wp":false,
-}
+// запускаем сессию
+require_once __DIR__ . '/admin/index.php';
 
-*/
-require_once __DIR__ . "/admin/index.php";
+# сбрасываем время сессии
+session_cache_expire();
+Tracy\Debugger::setSessionStorage(new Tracy\NativeSession);
+Tracy\Debugger::enable();
+
+### шаблонизатор Smarty 5.x
+use Smarty\Smarty;
+
+$smarty = new Smarty();
+$smarty->setTemplateDir(__DIR__ . '/admin/tpl'); // здесь лежат шаблоны tpl.html
+
+$smarty->setCompileDir(__DIR__ . '/admin/smarty/compile_dir');  // здесь компилируюся *.php
+$smarty->setConfigDir(__DIR__ . '/admin/smarty/smarty_config'); // незнаю
+$smarty->setCacheDir(__DIR__ . '/admin/smarty/smarty_cache');
+
+$smarty->compile_id    = 'ant2025';
+$smarty->force_compile = true;
+// $smarty->setEscapeHtml(true); //Enable auto-escaping for HTML as follows:
+$smarty->setEscapeHtml(false);
+// $smarty->testInstall();
+// $smarty->testInstall();
+
+### конец ### шаблонизатор Smarty 5.x
+
+require_once __DIR__ . '/admin/admin.php';

@@ -1,7 +1,7 @@
 <?php
 ### НАСТРОЙКИ
 #    //    {$smarty.const.
-const CONF_SECURITY_EXPIRE = 12; //   {$smarty.const.CONF_SECURITY_EXPIRE}
+
 /*Количество часов, в течении которых магазин будет "помнить" посетителей  Укажите количество часов, в течении которых магазин будет "помнить" посетителей после последнего посещения. По истечении срока сессия удаляется.*/
 const CONF_PROTECTED_CONNECTION = 0; //   {$smarty.const.CONF_PROTECTED_CONNECTION}
 
