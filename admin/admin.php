@@ -1,5 +1,5 @@
 <?php
-const PATH_CORE = 'core/';
+const PATH_CORE = 'admin/core/';
 
 require_once PATH_CORE . 'database_connect.php';
 $sqli_connect = [
@@ -58,13 +58,19 @@ $_COOKIE = stripslashes_deep($_COOKIE);
 # сбрасываем время сессии
 session_cache_expire();
 # стартуем сессию
+#####  session_start();
+#####  Tracy can display Debug bar and Bluescreens for AJAX requests and redirects. Tracy creates its own sessions, stores #####  data in its own temporary files, and uses a `tracy-session` cookie.
+#####
+#####  Tracy can also be configured to use a native PHP session, which is started before Tracy is turned on:
+#####
+#####  ```php
 session_start();
+// Tracy\Debugger::setSessionStorage(new Tracy\NativeSession);
+Tracy\Debugger::enable();
 
-// bdump($_SESSION);
 $relaccess = checkLoginMe();
-// dd($relaccess);
-dump($_SESSION);
-dump($_COOKIE);
+
+echo "jjhjjj";
 
 if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
     $wrongLoginOrPw = 1;

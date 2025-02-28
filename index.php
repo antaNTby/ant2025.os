@@ -1,10 +1,10 @@
 <?php
 #### index.php ####
 ### 2025-02-19 ####
-echo "hello! root index is here";
+// echo "hello! root index is here";
 
 // Settings in here override those in "/phpfmt/phpfmt.sublime-settings",
-
+/*
 {
     "autocomplete":false,
     "autoimport":false,
@@ -33,7 +33,7 @@ echo "hello! root index is here";
 
     ],
     "php_bin":"c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",
-    /*"php_bin": "c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",*/
+    "php_bin":"c:/OSPanel/modules/PHP-8.3/PHP/php-win.exe",
     "psr1":false,
     "psr1_naming":false,
     "psr2":true,
@@ -42,3 +42,6 @@ echo "hello! root index is here";
     "version":4,
     "wp":false,
 }
+
+*/
+require_once __DIR__ . "/admin/index.php";

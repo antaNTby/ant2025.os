@@ -28,3 +28,6 @@ const PATH_TPL     = 'tpl/';
 const PATH_TPL_SUB = 'tpl/sub/';
 
 const EXT_TPL = '.tpl.html';
+
+const BOOTSTRAP_ICONS_CSS_LOCAL = '<link rel="stylesheet" href="/lib/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">';
+const BOOTSTRAP_CSS_LOCAL       = '<link rel="stylesheet" href="/lib/bootstrap-5.3.3-dist/css/bootstrap.min.css">';
