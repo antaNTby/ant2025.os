@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '13ba3b3fdef4b236d88a4053746651bb1464aa56',
+        'reference' => 'cf2fe2173f6eb473ac4999fbb8c978b1c957dfa6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '13ba3b3fdef4b236d88a4053746651bb1464aa56',
+            'reference' => 'cf2fe2173f6eb473ac4999fbb8c978b1c957dfa6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -36,15 +36,6 @@
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'symfony/var-dumper' => array(
-            'pretty_version' => 'v7.2.3',
-            'version' => '7.2.3.0',
-            'reference' => '82b478c69745d8878eb60f9a049a4d584996f73a',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../symfony/var-dumper',
-            'aliases' => array(),
-            'dev_requirement' => true,
         ),
         'thingengineer/mysqli-database-class' => array(
             'pretty_version' => 'dev-master',

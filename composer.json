@@ -1,10 +1,10 @@
 {
-    "require": {
+    "require":
+    {
         "smarty/smarty": "^5.4",
         "tracy/tracy": "^2.10",
         "thingengineer/mysqli-database-class": "dev-master"
     },
-    "require-dev": {
-        "symfony/var-dumper": "^7.2"
-    }
+    "require-dev":
+    {}
 }
