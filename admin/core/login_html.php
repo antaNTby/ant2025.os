@@ -11,16 +11,16 @@ function checkLoginMe()
         // $row = db_fetch_row($q);
 
         $db = MysqliDb::getInstance();
-        $db->where("Login", trim($_SESSION['log']));
-        $row = $db->getOne('customers', "cust_password, actions");
-        dump($row);
+        $db->where('Login', trim($_SESSION['log']));
+        $row = $db->getOne('customers', 'cust_password, actions');
+        bdump($row);
         //found customer - check password
         //unauthorized access
-        if (! $row || ! isset($_SESSION['pass']) || $row[0] != $_SESSION['pass']) {
+        if (! $row || ! isset($_SESSION['pass']) || $row['cust_password'] != $_SESSION['pass']) {
             unset($_SESSION['log']);
             unset($_SESSION['pass']);
         } else {
-            $rls = unserialize($row[1]);
+            $rls = unserialize($row['actions']);
             unset($row);
             # fix log errors WARNING: in_array() expects parameter 2 to be array, boolean given
             if (! is_array($rls)) {
