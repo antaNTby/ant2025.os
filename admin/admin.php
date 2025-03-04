@@ -1,5 +1,7 @@
 <?php
 
+// echo __DIR__ . '-admin.php-<br>';
+
 require_once PATH_CORE . 'const.php';    // управляющие и служебные константы
 require_once PATH_CORE . 'orklang.php';  // строки текста
 require_once PATH_CORE . 'settings.php'; // настройки
@@ -11,7 +13,7 @@ $_POST   = stripslashes_deep($_POST);
 $_GET    = stripslashes_deep($_GET);
 $_COOKIE = stripslashes_deep($_COOKIE);
 
-require_once PATH_CORE . 'authentication.php';
+// require_once PATH_CORE . 'authentication.php';
 
 if (isset($_COOKIE['PHPSESSID'])) {
     if (SECURITY_EXPIRE > 0) {

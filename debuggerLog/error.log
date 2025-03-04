@@ -1,0 +1,4 @@
+[2025-03-04 21-36-35] PHP Warning: Undefined array key "REMOTE_ADDR" in C:\OSPanel\home\ant2025.os\admin\index.php:121  @  CLI (PID: 14896): "C:\OSPanel\home\ant2025.os\index.php" 
+[2025-03-04 21-36-35] PHP Warning: Undefined array key "HTTP_USER_AGENT" in C:\OSPanel\home\ant2025.os\admin\index.php:75  @  CLI (PID: 14896): "C:\OSPanel\home\ant2025.os\index.php" 
+[2025-03-04 21-36-35] PHP Warning: Undefined array key "REQUEST_URI" in C:\OSPanel\home\ant2025.os\admin\index.php:76  @  CLI (PID: 14896): "C:\OSPanel\home\ant2025.os\index.php" 
+[2025-03-04 21-36-35] PHP Warning: PHP Request Shutdown: Cannot call session save handler in a recursive manner in Unknown:0  @  CLI (PID: 14896): "C:\OSPanel\home\ant2025.os\index.php" 

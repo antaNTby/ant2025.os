@@ -1,22 +1,22 @@
 <?php
+// echo __DIR__ . ' -index.php-<br>';
+
 require __DIR__ . '/vendor/autoload.php';
 
 Tracy\Debugger::$logDirectory = __DIR__ . '/debuggerLog';
 // Tracy\Debugger::$dumpTheme = 'dark';
 Tracy\Debugger::$dumpTheme = 'light';
 Tracy\Debugger::$showBar   = true;
-Tracy\Debugger::$maxDepth  = 2;  // default: 3
-Tracy\Debugger::$maxLength = 80; // default: 150
+Tracy\Debugger::$maxDepth  = 2;   // default: 3
+Tracy\Debugger::$maxLength = 280; // default: 150
 // Tracy\Debugger::$editor    = "editor://open/?file=%file&line=%line";
 Tracy\Debugger::$editor = '%file:%line';
 
 require_once __DIR__ . '/vendor/thingengineer/mysqli-database-class/MysqliDb.php';
 
 // запускаем сессию
-require_once __DIR__ . '/admin/index.php';
+// require_once __DIR__ . '/admin/index.php'; // было до переноса
 
-# сбрасываем время сессии
-session_cache_expire();
 Tracy\Debugger::setSessionStorage(new Tracy\NativeSession);
 Tracy\Debugger::enable();
 Tracy\Debugger::timer();
@@ -39,5 +39,12 @@ $smarty->setEscapeHtml(false);
 // $smarty->testInstall();
 
 ### конец ### шаблонизатор Smarty 5.x
+
+require_once __DIR__ . '/admin/core/authentication.php';
+# сбрасываем время сессии
+// session_cache_expire();
+session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy', 'sess_gc');
+session_set_cookie_params(SECURITY_EXPIRE);
+session_start();
 
 require_once __DIR__ . '/admin/admin.php';
