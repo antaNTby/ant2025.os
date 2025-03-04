@@ -13,7 +13,7 @@ function checkLoginMe()
         $db = MysqliDb::getInstance();
         $db->where('Login', trim($_SESSION['log']));
         $row = $db->getOne('customers', 'cust_password, actions');
-        bdump($row);
+
         //found customer - check password
         //unauthorized access
         if (! $row || ! isset($_SESSION['pass']) || $row['cust_password'] != $_SESSION['pass']) {
@@ -28,6 +28,7 @@ function checkLoginMe()
             }
         }
     }
+
     return $rls;
 }
 

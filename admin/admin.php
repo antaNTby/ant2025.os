@@ -11,7 +11,7 @@ $_POST   = stripslashes_deep($_POST);
 $_GET    = stripslashes_deep($_GET);
 $_COOKIE = stripslashes_deep($_COOKIE);
 
-require_once PATH_CORE . "login_html.php";
+require_once PATH_CORE . 'login_html.php';
 
 if (isset($_COOKIE['PHPSESSID'])) {
     if (SECURITY_EXPIRE > 0) {
@@ -23,20 +23,37 @@ if (isset($_COOKIE['PHPSESSID'])) {
 
 // ЗДЕСЬ ВСТАВЛЯЮТСЯ DO=PROCESSOR
 $relaccess = checkLoginMe();
+dump($_SESSION);
+// dump($relaccess);
 
-dump($relaccess);
+// if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
+//     $wrongLoginOrPw = 1;
 
-if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
-    $wrongLoginOrPw = 1;
+//     $elapsed = Tracy\Debugger::timer();
+//     // dump($elapsed);
+//     die(ERROR_FORBIDDEN);
+// } else {
+//     $LOG_OK = true;
+// //define start smarty template
+//     $smarty->assign('log_error', '');
+//     $smarty->assign('admin_main_content_template', 'start.tpl.html');
+// }
 
-    $elapsed = Tracy\Debugger::timer();
-    dump($elapsed);
+if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
+
+    if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
+
+        if (regAuthenticate($_POST['user_login'], $_POST['user_pw'])) {
+            dump([$_SESSION, $_POST['user_login'], $_POST['user_pw']]);
+            Redirect(set_query('&__tt='));
+        }
+
+        die(ERROR_FORBIDDEN);
+    }
+
     die(ERROR_FORBIDDEN);
 } else {
-    $LOG_OK = true;
-//define start smarty template
-    $smarty->assign('log_error', '');
-    $smarty->assign('admin_main_content_template', 'start.tpl.html');
+    die(ERROR_FORBIDDEN);
 }
 
 # user logout
@@ -51,7 +68,8 @@ if (isset($_GET['logout'])) {
         Redirect(ADMIN_FILE);
     } else {
         // Redirect("/index.php?user_details=yes");
-        Redirect("/index.php");
+        // Redirect('/index.php');
+        die(ERROR_FORBIDDEN);
     }
 
     die(ERROR_FORBIDDEN);
@@ -69,4 +87,4 @@ if (isset($_SESSION['log'])) {
     $smarty->assign('adminlogname', $_SESSION['log']);
 }
 
-$smarty->display('admin.tpl.html');
+// $smarty->display('admin.tpl.html');

@@ -165,8 +165,6 @@ function regAuthenticate(
 
     $cols = ['cust_password', 'CID', 'ActivationCode'];
     $row  = $db->getOne('customers', 'cust_password, CID, ActivationCode'); //contains an Array of all users
-    dd($row);
-    bdump($row);
 
     if (($db->count > 0) && (strlen(trim($login)) > 0)) {
         if ($row['cust_password'] == cryptPasswordCrypt($password, null)) {
@@ -180,7 +178,7 @@ function regAuthenticate(
             // stAddCustomerLog($login);
             // move cart content into DB
             // moveCartFromSession2DB();
-            bdump($_SESSION);
+            // dump($_SESSION);
 
             return true;
         } else {
@@ -189,36 +187,6 @@ function regAuthenticate(
     } else {
         return false;
     }
-
-    /*
-                        $q   = db_query("SELECT cust_password, CID, ActivationCode FROM " . CUSTOMERS_TABLE . " WHERE Login='" . trim($login) . "'");
-                        $row = db_fetch_row($q);
-
-                        if ($row && strlen(trim($login)) > 0) {
-                            // if ($row["cust_password"] == cryptPasswordCrypt($password, null))
-                            if ($row["cust_password"] == trim($password)) {
-                                // set session variables
-                                $_SESSION["log"] = $login;
-                                // $_SESSION["pass"] = cryptPasswordCrypt($password, null);
-                                $_SESSION["pass"] = trim($password);
-
-                                $_SESSION["current_currency"] = $row["CID"];
-
-                    // update statistic
-                                stAddCustomerLog($login);
-
-                    // move cart content into DB
-                                moveCartFromSession2DB();
-
-                                return true;
-                            } else {
-                                return false;
-                            }
-
-                        } else {
-                            return false;
-                        }
-*/
 }
 
 // *****************************************************************************
