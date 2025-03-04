@@ -49,6 +49,7 @@ function correct_URL(
 // Returns        nothing
 function Redirect($url)
 {
+    bdump($url);
     header('Location: ' . $url);
     exit();
 }

@@ -154,7 +154,7 @@ function regGetIdByLogin($login)
 //                update statistic, move cart content into DB
 // Returns        false if authentication failure, true - otherwise
 
-function regAuthenticate(
+function regAuthenticateOLD(
     $login,
     $password,
     $Redirect = true
@@ -162,9 +162,7 @@ function regAuthenticate(
 
     $db = MysqliDb::getInstance();
     $db->where('Login', trim($login));
-
-    $cols = ['cust_password', 'CID', 'ActivationCode'];
-    $row  = $db->getOne('customers', 'cust_password, CID, ActivationCode'); //contains an Array of all users
+    $row = $db->getOne('customers', 'cust_password, CID, ActivationCode'); //contains an Array of all users
 
     if (($db->count > 0) && (strlen(trim($login)) > 0)) {
         if ($row['cust_password'] == cryptPasswordCrypt($password, null)) {
@@ -187,6 +185,55 @@ function regAuthenticate(
     } else {
         return false;
     }
+}
+
+function regAuthenticate($login, $password)
+{
+    $db = MysqliDb::getInstance();
+    $db->where('Login', trim($login));
+    $row = $db->getOne('customers', 'cust_password, CID');
+
+    if ($db->count > 0 && password_verify($password, $row['cust_password'])) {
+        $_SESSION['log']              = $login;
+        $_SESSION['pass']             = password_hash($password, PASSWORD_DEFAULT);
+        $_SESSION['current_currency'] = $row['CID'];
+
+        // update statistic
+        // stAddCustomerLog($login);
+        // move cart content into DB
+        // moveCartFromSession2DB();
+        // dump($_SESSION);
+
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function regSavePassword($login, $password)
+{
+
+    // dumpe([$login, $password]);
+
+    // Хеширование пароля
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $data = [
+        'cust_password' => $hashedPassword,
+        'Login'         => trim($login),
+    ];
+
+    $db = MysqliDb::getInstance();
+    $db->where('Login', trim($login));
+
+    if ($db->update('customers', $data)) {
+        bdump($db->count . ' records were updated');
+    } else {
+        bdump('update failed: ' . $db->getLastError());
+    }
+
+    // dumpe($db->getLastQuery());
+    return $hashedPassword;
 }
 
 // *****************************************************************************
@@ -863,7 +910,7 @@ function regGetAddressStr(
     }
 
     if ($country != '') {
-        $strAddress  = $address['first_name'] . '  ' . $address['last_name'];
+        $strAddress = $address['first_name'] . '  ' . $address['last_name'];
         if (strlen($address['address']) > 0) {
             $strAddress .= '<br>' . $address['address'];
         }
@@ -881,7 +928,7 @@ function regGetAddressStr(
         }
 
     } else {
-        $strAddress  = $address['first_name'] . '  ' . $address['last_name'];
+        $strAddress = $address['first_name'] . '  ' . $address['last_name'];
         if (strlen($address['address']) > 0) {
             $strAddress .= '<br>' . $address['address'];
         }
@@ -920,12 +967,12 @@ function regGetCustomers(
     $where_clause = '';
 
     if (isset($callBackParam['Login'])) {
-        $callBackParam['Login']  = xEscSQL($callBackParam['Login']);
-        $where_clause           .= " Login LIKE '%" . $callBackParam['Login'] . "%' ";
+        $callBackParam['Login'] = xEscSQL($callBackParam['Login']);
+        $where_clause .= " Login LIKE '%" . $callBackParam['Login'] . "%' ";
     }
 
     if (isset($callBackParam['customer_aka'])) {
-        $callBackParam['customer_aka']  = xEscSQL($callBackParam['customer_aka']);
+        $callBackParam['customer_aka'] = xEscSQL($callBackParam['customer_aka']);
         if ($where_clause != '') {
             $where_clause .= ' AND ';
         }
@@ -935,7 +982,7 @@ function regGetCustomers(
     }
 
     if (isset($callBackParam['first_name'])) {
-        $callBackParam['first_name']  = xEscSQL($callBackParam['first_name']);
+        $callBackParam['first_name'] = xEscSQL($callBackParam['first_name']);
         if ($where_clause != '') {
             $where_clause .= ' AND ';
         }
@@ -944,7 +991,7 @@ function regGetCustomers(
     }
 
     if (isset($callBackParam['last_name'])) {
-        $callBackParam['last_name']  = xEscSQL($callBackParam['last_name']);
+        $callBackParam['last_name'] = xEscSQL($callBackParam['last_name']);
         if ($where_clause != '') {
             $where_clause .= ' AND ';
         }
@@ -953,7 +1000,7 @@ function regGetCustomers(
     }
 
     if (isset($callBackParam['email'])) {
-        $callBackParam['email']  = xEscSQL($callBackParam['email']);
+        $callBackParam['email'] = xEscSQL($callBackParam['email']);
         if ($where_clause != '') {
             $where_clause .= ' AND ';
         }
@@ -1006,7 +1053,7 @@ function regGetCustomers(
         $where_clause = ' where ' . $where_clause;
     }
 
-    $order_clause  = '';
+    $order_clause = '';
     if (isset($callBackParam['sort'])) {
         $order_clause .= ' order by ' . xEscSQL($callBackParam['sort']) . ' ';
         if (isset($callBackParam['direction'])) {
@@ -1019,12 +1066,12 @@ function regGetCustomers(
         }
     }
 
-    $sql_customers  = 'SELECT customerID, Login, cust_password, Email, first_name, last_name, subscribed4news, ' . ' custgroupID, addressID, reg_datetime, ActivationCode, CID, actions, customer_aka ' . '
+    $sql_customers = 'SELECT customerID, Login, cust_password, Email, first_name, last_name, subscribed4news, ' . ' custgroupID, addressID, reg_datetime, ActivationCode, CID, actions, customer_aka ' . '
 FROM ' . CUSTOMERS_TABLE . ' ' . $where_clause . ' ' . $order_clause;
 
     // echo ( $sql_customers );
 
-    $q  = db_query($sql_customers);
+    $q = db_query($sql_customers);
 
     $data = [];
     $i    = 0; //var_dump ($navigatorParams);
