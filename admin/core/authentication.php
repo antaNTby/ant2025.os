@@ -158,14 +158,16 @@ function checkLogin()
         //unauthorized access
 
         dump([
+            'function'        => 'checkLogin',
             'cust_password'   => $row['cust_password'],
             "SESSION['pass']" => $_SESSION['pass'],
-            'is not true'     => ($row['cust_password'] != $_SESSION['pass']),
+            // 'is not true'     => ($row['cust_password'] !== $_SESSION['pass']),
             'password_verify' => password_verify($_POST['user_pw'], $row['cust_password'], )
             ,
         ]);
 
-        if (! $row || ! isset($_SESSION['pass']) || ! password_verify($_POST['user_pw'], $row['cust_password'])) {
+        // if (! $row || ! isset($_SESSION['pass']) || ! password_verify($_POST['user_pw'], $row['cust_password'])) {
+        if (! $row || ! isset($_SESSION['pass']) || ($_SESSION['pass'] !== $row['cust_password'])) {
 
             unset($_SESSION['log']);
             unset($_SESSION['pass']);
@@ -173,6 +175,7 @@ function checkLogin()
 
             dump([
                 'DROP_SESSION' => $_SESSION,
+                'function'     => 'checkLogin',
                 'row_actions'  => $row['actions'],
             ]);
 
@@ -180,7 +183,13 @@ function checkLogin()
 
             $rls = unserialize($row['actions']);
 
-            dump($rls);
+            dump([
+                'IS_ADMIN_SESSION' => $_SESSION,
+                'function'         => 'checkLogin',
+                'row_actions'      => $row['actions'],
+                'rls'              => $rls,
+            ]);
+
             unset($row);
             # fix log errors WARNING: in_array() expects parameter 2 to be array, boolean given
             if (! is_array($rls)) {
@@ -199,13 +208,13 @@ function regAuthenticate($login, $password)
     $db->where('Login', trim($login));
     $row = $db->getOne('customers', 'cust_password, CID');
 
-    dump([
-        'function'        => 'regAuthenticate',
-        '_POST'           => $_POST['user_pw'],
-        'password'        => $password,
-        'row'             => $row['cust_password'],
-        'password_verify' => password_verify($password, $row['cust_password']),
-    ]);
+    // dump([
+    //     'function'        => 'regAuthenticate',
+    //     '_POST'           => $_POST['user_pw'],
+    //     'password'        => $password,
+    //     'row'             => $row['cust_password'],
+    //     'password_verify' => password_verify($password, $row['cust_password']),
+    // ]);
 
     if ($db->count > 0 && password_verify($password, $row['cust_password'])) {
 
@@ -217,7 +226,7 @@ function regAuthenticate($login, $password)
         // stAddCustomerLog($login);
         // move cart content into DB
         // moveCartFromSession2DB();
-        dump(['set_SESSION' => $_SESSION]);
+        // dump(['set_SESSION' => $_SESSION]);
 
         return true;
     } else {

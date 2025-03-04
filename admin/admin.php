@@ -96,6 +96,7 @@ if (isset($_GET['logout'])) {
 
 ###
 
-dump($_SESSION);
+//define start smarty template
+$smarty->assign('admin_main_content_template', 'start.tpl.html');
 
 $smarty->display('admin.tpl.html');
