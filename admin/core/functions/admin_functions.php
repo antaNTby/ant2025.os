@@ -1,7 +1,7 @@
 <?php
 // admin_functions.php
 
-function checklogin()
+function checkloginOLD()
 {
     // cls();
     $rls = [];

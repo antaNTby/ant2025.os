@@ -187,55 +187,6 @@ function regAuthenticateOLD(
     }
 }
 
-function regAuthenticate($login, $password)
-{
-    $db = MysqliDb::getInstance();
-    $db->where('Login', trim($login));
-    $row = $db->getOne('customers', 'cust_password, CID');
-
-    if ($db->count > 0 && password_verify($password, $row['cust_password'])) {
-        $_SESSION['log']              = $login;
-        $_SESSION['pass']             = password_hash($password, PASSWORD_DEFAULT);
-        $_SESSION['current_currency'] = $row['CID'];
-
-        // update statistic
-        // stAddCustomerLog($login);
-        // move cart content into DB
-        // moveCartFromSession2DB();
-        // dump($_SESSION);
-
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function regSavePassword($login, $password)
-{
-
-    // dumpe([$login, $password]);
-
-    // Хеширование пароля
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    $data = [
-        'cust_password' => $hashedPassword,
-        'Login'         => trim($login),
-    ];
-
-    $db = MysqliDb::getInstance();
-    $db->where('Login', trim($login));
-
-    if ($db->update('customers', $data)) {
-        bdump($db->count . ' records were updated');
-    } else {
-        bdump('update failed: ' . $db->getLastError());
-    }
-
-    // dumpe($db->getLastQuery());
-    return $hashedPassword;
-}
-
 // *****************************************************************************
 // Purpose          sends password to customer email
 // Inputs

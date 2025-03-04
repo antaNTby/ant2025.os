@@ -11,7 +11,7 @@ $_POST   = stripslashes_deep($_POST);
 $_GET    = stripslashes_deep($_GET);
 $_COOKIE = stripslashes_deep($_COOKIE);
 
-require_once PATH_CORE . 'login_html.php';
+require_once PATH_CORE . 'authentication.php';
 
 if (isset($_COOKIE['PHPSESSID'])) {
     if (SECURITY_EXPIRE > 0) {
@@ -21,11 +21,13 @@ if (isset($_COOKIE['PHPSESSID'])) {
     }
 }
 
-unset($_SESSION['log']);
-unset($_SESSION['pass']);
+// unset($_SESSION['log']);
+// unset($_SESSION['pass']);
+// unset($_SESSION['current_currency']);
+// regForceSavePassword($_POST['user_login'], $_POST['user_pw']);
 
 // ЗДЕСЬ ВСТАВЛЯЮТСЯ DO=PROCESSOR
-$relaccess = checkLoginMe();
+$relaccess = checkLogin();
 // dump($_SESSION);
 // dump($relaccess);
 
@@ -43,15 +45,19 @@ $relaccess = checkLoginMe();
 // }
 
 if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
-    global $access_denied_html;
-    if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
 
-        // regSavePassword($_POST['user_login'], $_POST['user_pw']);
+    if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
+        // regForceSavePassword($_POST['user_login'], $_POST['user_pw']);
 
         $hs = regAuthenticate($_POST['user_login'], $_POST['user_pw']);
+
         if ($hs) {
             // dumpe([$_SESSION, $_REQUEST, $hs, $_POST['user_login'], $_POST['user_pw']]);
             $access_denied_html = '';
+
+            // dump($_SESSION);
+            // dump($relaccess);
+
             Redirect(set_query('&__tt='));
         }
 
@@ -67,8 +73,10 @@ if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
 
 # user logout
 if (isset($_GET['logout'])) {
+
     unset($_SESSION['log']);
     unset($_SESSION['pass']);
+    unset($_SESSION['current_currency']);
 
     // RedirectJavaScript(ADMIN_FILE . '?access_deny=' . SITE_URL);
     // RedirectJavaScript(ADMIN_FILE);
@@ -85,16 +93,6 @@ if (isset($_GET['logout'])) {
 }
 
 ###
-
-### define department and subdepartment
-// include_once PATH_CORE . 'departments.php';
-
-// include_once PATH_CORE . 'admin_end.php';
-
-// или вход или введите пароль
-if (isset($_SESSION['log'])) {
-    $smarty->assign('adminlogname', $_SESSION['log']);
-}
 
 dump($_SESSION);
 
