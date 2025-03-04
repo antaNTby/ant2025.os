@@ -14,6 +14,7 @@ function checkLoginMe()
         $db->where('Login', trim($_SESSION['log']));
         $row = $db->getOne('customers', 'cust_password, actions');
 
+        dump($row);
         //found customer - check password
         //unauthorized access
         if (! $row || ! isset($_SESSION['pass']) || $row['cust_password'] != $_SESSION['pass']) {

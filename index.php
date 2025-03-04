@@ -7,7 +7,8 @@ Tracy\Debugger::$dumpTheme = 'light';
 Tracy\Debugger::$showBar   = true;
 Tracy\Debugger::$maxDepth  = 2;  // default: 3
 Tracy\Debugger::$maxLength = 80; // default: 150
-Tracy\Debugger::$editor    = "editor://open/?file=%file&line=%line";
+// Tracy\Debugger::$editor    = "editor://open/?file=%file&line=%line";
+Tracy\Debugger::$editor = '%file:%line';
 
 require_once __DIR__ . '/vendor/thingengineer/mysqli-database-class/MysqliDb.php';
 

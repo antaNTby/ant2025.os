@@ -21,6 +21,9 @@ if (isset($_COOKIE['PHPSESSID'])) {
     }
 }
 
+unset($_SESSION['log']);
+unset($_SESSION['pass']);
+
 // ЗДЕСЬ ВСТАВЛЯЮТСЯ DO=PROCESSOR
 $relaccess = checkLoginMe();
 // dump($_SESSION);
@@ -40,13 +43,14 @@ $relaccess = checkLoginMe();
 // }
 
 if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
-
+    global $access_denied_html;
     if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
 
         // regSavePassword($_POST['user_login'], $_POST['user_pw']);
+
         $hs = regAuthenticate($_POST['user_login'], $_POST['user_pw']);
         if ($hs) {
-            bdump([$_SESSION, $hs, $_POST['user_login'], $_POST['user_pw']]);
+            // dumpe([$_SESSION, $_REQUEST, $hs, $_POST['user_login'], $_POST['user_pw']]);
             $access_denied_html = '';
             Redirect(set_query('&__tt='));
         }
@@ -91,5 +95,7 @@ if (isset($_GET['logout'])) {
 if (isset($_SESSION['log'])) {
     $smarty->assign('adminlogname', $_SESSION['log']);
 }
+
+dump($_SESSION);
 
 $smarty->display('admin.tpl.html');
