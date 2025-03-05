@@ -138,43 +138,36 @@ function set_cookie(
         . (! $HTTPOnly ? '' : '; HttpOnly'), false);
 }
 
-function checkLogin()
+function checkLogin__OLD()
 {
 
     $rls = [];
     //look for user in the database
     if (isset($_SESSION['log'])) {
 
-        // $q   = db_query('SELECT cust_password, actions FROM ' . CUSTOMERS_TABLE . "WHERE Login = '" . trim($_SESSION['log']) . "'");
-        // $row = db_fetch_row($q);
-
         $db = MysqliDb::getInstance();
         $db->where('Login', trim($_SESSION['log']));
         $row = $db->getOne('customers', 'cust_password, actions');
 
-        // dump($row);
-        //found customer - check password
-        //unauthorized access
-
-        dump([
+        bdump([
             'function'        => 'checkLogin',
             'cust_password'   => $row['cust_password'],
-            "SESSION['pass']" => $_SESSION['pass']
-            // 'is not true'     => ($row['cust_password'] !== $_SESSION['pass']),
-
-            // 'password_verify' => password_verify($_POST['user_pw'], $row['cust_password'], )
-
-            ,
+            "SESSION['pass']" => $_SESSION['pass'],
         ]);
 
-        // if (! $row || ! isset($_SESSION['pass']) || ! password_verify($_POST['user_pw'], $row['cust_password'])) {
-        if (! $row || ! isset($_SESSION['pass']) || ($_SESSION['pass'] !== $row['cust_password'])) {
+        //found customer - check password
+        //unauthorized access
+        if (
+            ! $row ||
+            ! isset($_SESSION['pass']) ||
+            ($_SESSION['pass'] !== $row['cust_password'])
+        ) {
 
             unset($_SESSION['log']);
             unset($_SESSION['pass']);
             unset($_SESSION['current_currency']);
 
-            dump([
+            bdump([
                 'DROP_SESSION' => $_SESSION,
                 'function'     => 'checkLogin',
                 'row_actions'  => $row['actions'],
@@ -184,7 +177,7 @@ function checkLogin()
 
             $rls = unserialize($row['actions']);
 
-            dump([
+            bdump([
                 'IS_ADMIN_SESSION' => $_SESSION,
                 'function'         => 'checkLogin',
                 'row_actions'      => $row['actions'],
@@ -198,6 +191,55 @@ function checkLogin()
             }
 
         }
+    }
+
+    return $rls;
+}
+
+function checkLogin()
+{
+
+    $rls  = [];
+    $mess = '';
+
+    //look for user in the database
+    if (isset($_SESSION['log'])) {
+
+        $db = MysqliDb::getInstance();
+        $db->where('Login', trim($_SESSION['log']));
+        $row = $db->getOne('customers', 'cust_password, actions');
+
+        if (! $row) {
+            $mess .= 'Пользователь  не найден. ';
+        }
+        if (! isset($_SESSION['pass'])) {
+            $mess .= 'Пароль не сохранен. ';
+        }
+        if (($_SESSION['pass'] !== $row['cust_password'])) {
+            $mess .= 'Пароль не совпадает ';
+        }
+
+        if ($mess !== '') {
+            unset($_SESSION['log']);
+            unset($_SESSION['pass']);
+            unset($_SESSION['current_currency']);
+        } else {
+
+            try {
+                $rls = unserialize($row['actions']);
+                unset($row);
+            } catch (Exception $e) {
+                $rls = [];
+            }
+
+        }
+
+    } else {
+        $mess .= 'Пользователь  не залогинен. ';
+    }
+
+    if ($mess !== '') {
+        bdump($mess);
     }
 
     return $rls;

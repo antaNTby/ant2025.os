@@ -61,7 +61,7 @@ if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
             // dump($relaccess);
 
             $url = set_query('&__tt=');
-            bdump($url);
+            // bdump($url);
             Redirect($url);
         }
 
@@ -98,6 +98,9 @@ if (isset($_GET['logout'])) {
 
 ###
 
+if (isset($_SESSION['log'])) {
+    $smarty->assign('adminlogname', $_SESSION['log']);
+}
 //define start smarty template
 $smarty->assign('admin_main_content_template', 'start.tpl.html');
 
