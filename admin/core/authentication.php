@@ -270,7 +270,9 @@ function regForceSavePassword($login, $password)
 $site_url = 'ant2025.os';
 $logo256  = 'logo256.jpg';
 
-$access_denied_html = '<div class="alert alert-danger d-flex align-items-center my-5" role="alert"><div>Access Denied<div></div>';
+$access_denied_html = (checkLogin() == [])
+? '<div class="alert alert-danger d-flex align-items-center my-5" role="alert">Access Denied</div>'
+: '';
 
 $bootstrap_icons_css_local = '<link rel="stylesheet" href="/lib/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">';
 $bootstrap_css_local       = '<link rel="stylesheet" href="/lib/bootstrap-5.3.3-dist/css/bootstrap.min.css">';
@@ -298,6 +300,8 @@ $ERROR_FORBIDDEN_HTML = <<<HTML
 
                 <img alt="nix.by" class="d-block mx-auto rounded" src="/media/{$logo256}" style="background-color:#fff;margin:60px">
 
+                {$access_denied_html}
+
                 <form id="aushform" method="post">
                     <div class="mb-3">
                         <label for="user_login" class="form-label">Username</label>
@@ -314,7 +318,6 @@ $ERROR_FORBIDDEN_HTML = <<<HTML
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Sign in</button>
                 </form>
-                {$access_denied_html}
             </div>
         </div>
     </div>
