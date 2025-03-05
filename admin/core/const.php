@@ -3,11 +3,11 @@
 ### КОНСТАНТЫ
 
 // FROM connect.inc.php
-const SLASH    = '/';                                 //   {$smarty.const.SLASH}
-const SITE_URL = 'ant2025.os';                        //    {$smarty.const.SITE_URL}
-                                                      // const CONF_FULL_SHOP_URL = 'antCMS.os/admin';                //    {$smarty.const.CONF_FULL_SHOP_URL}
-const ADMIN_FILE        = '/admin/admin.php';         //    {$smarty.const.ADMIN_FILE}
-const ADMIN_LOGOUT_LINK = ADMIN_FILE . '?logout=yes'; //    {$smarty.const.ADMIN_LOGOUT_LINK}
+const SLASH    = '/';                         //   {$smarty.const.SLASH}
+const SITE_URL = 'ant2025.os';                //    {$smarty.const.SITE_URL}
+                                              // const CONF_FULL_SHOP_URL = 'antCMS.os/admin';                //    {$smarty.const.CONF_FULL_SHOP_URL}
+const ADMIN_FILE        = '/admin/admin.php'; //    {$smarty.const.ADMIN_FILE}
+const ADMIN_LOGOUT_LINK = '?logout=yes';      //    {$smarty.const.ADMIN_LOGOUT_LINK}
 
 const ERROR_DB_INIT = SITE_URL . ' :: ' . 'Database connection problem!'; //   {$smarty.const.ERROR_DB_INIT} database system
 

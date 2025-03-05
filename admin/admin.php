@@ -51,7 +51,7 @@ if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
     if (isset($_POST['user_login']) && isset($_POST['user_pw'])) {
         // regForceSavePassword($_POST['user_login'], $_POST['user_pw']);
 
-        $hs = regAuthenticate($_POST['user_login'], $_POST['user_pw']);
+        $hs = verifyPassword($_POST['user_login'], $_POST['user_pw']);
 
         if ($hs) {
             // dumpe([$_SESSION, $_REQUEST, $hs, $_POST['user_login'], $_POST['user_pw']]);
@@ -60,7 +60,9 @@ if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
             // dump($_SESSION);
             // dump($relaccess);
 
-            Redirect(set_query('&__tt='));
+            $url = set_query('&__tt=');
+            bdump($url);
+            Redirect($url);
         }
 
         die(ERROR_FORBIDDEN);
@@ -84,7 +86,7 @@ if (isset($_GET['logout'])) {
     // RedirectJavaScript(ADMIN_FILE);
 
     if (in_array(100, $relaccess)) {
-        Redirect(ADMIN_FILE);
+        Redirect('/');
     } else {
         // Redirect("/index.php?user_details=yes");
         // Redirect('/index.php');

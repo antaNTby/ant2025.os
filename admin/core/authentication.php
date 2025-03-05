@@ -2,8 +2,7 @@
 // echo __DIR__ . '-auth.php-<br>';
 ### authentication.php
 
-const PATH_CORE = 'admin/core/';
-
+const PATH_CORE            = 'admin/core/';
 const CONF_SECURITY_EXPIRE = 12; //   {$smarty.const.CONF_SECURITY_EXPIRE}
 const CONF_SECURE_SESSIONS = 1;  //   {$smarty.const.CONF_SECURE_SESSIONS}  Использовать безопасные сессии    При использовании данной опции ip адрес и поле user_agent будут сверяться с начальным значением при старте сессии
 
@@ -53,7 +52,7 @@ function sess_read($key)
             $db->where('id', $key);
             // $db->delete('session');
             if ($db->delete('session')) {
-                bdump('successfully deleted');
+                bdump($result['IP'] . ' successfully deleted');
             }
         }
     }
@@ -92,7 +91,7 @@ function sess_destroy($key)
     $db->where('id', $key);
     // $db->delete('session');
     if ($db->delete('session')) {
-        bdump('successfully deleted');
+        bdump("'id'=> {$key}" . ' successfully deleted');
     }
 
     return true;
@@ -160,9 +159,11 @@ function checkLogin()
         dump([
             'function'        => 'checkLogin',
             'cust_password'   => $row['cust_password'],
-            "SESSION['pass']" => $_SESSION['pass'],
+            "SESSION['pass']" => $_SESSION['pass']
             // 'is not true'     => ($row['cust_password'] !== $_SESSION['pass']),
-            'password_verify' => password_verify($_POST['user_pw'], $row['cust_password'], )
+
+            // 'password_verify' => password_verify($_POST['user_pw'], $row['cust_password'], )
+
             ,
         ]);
 
@@ -202,21 +203,19 @@ function checkLogin()
     return $rls;
 }
 
-function regAuthenticate($login, $password)
+function verifyPassword($login, $password)
 {
     $db = MysqliDb::getInstance();
     $db->where('Login', trim($login));
     $row = $db->getOne('customers', 'cust_password, CID');
 
-    // dump([
-    //     'function'        => 'regAuthenticate',
-    //     '_POST'           => $_POST['user_pw'],
-    //     'password'        => $password,
-    //     'row'             => $row['cust_password'],
-    //     'password_verify' => password_verify($password, $row['cust_password']),
-    // ]);
+    if (($db->count != 1) || $db->getLastError()) {
+        bdump("Wrong Login! [{$login}]; " . $db->getLastError());
+        return false;
+    }
 
-    if ($db->count > 0 && password_verify($password, $row['cust_password'])) {
+    // if ($db->count > 0 && password_verify($password, $row['cust_password'])) {
+    if (password_verify($password, $row['cust_password'])) {
 
         $_SESSION['log']              = $login;
         $_SESSION['pass']             = $row['cust_password']; //password_hash($password, PASSWORD_DEFAULT);
@@ -230,8 +229,10 @@ function regAuthenticate($login, $password)
 
         return true;
     } else {
+        bdump("Wrong password for [{$login}]");
         return false;
     }
+
 }
 
 function regForceSavePassword($login, $password)
