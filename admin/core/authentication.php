@@ -138,7 +138,7 @@ function set_cookie(
         . (! $HTTPOnly ? '' : '; HttpOnly'), false);
 }
 
-function checkLogin($showDump = false)
+function checkLogin($showDump = true)
 {
     $roles   = [];
     $message = '';
@@ -183,7 +183,7 @@ function checkLogin($showDump = false)
     return $roles;
 }
 
-function verifyPassword($login, $password, $showDump = false)
+function verifyPassword($login, $password, $showDump = true)
 {
     // Проверяем входные данные перед обращением к базе
     if (! $login || ! $password) {
@@ -234,7 +234,7 @@ function verifyPassword($login, $password, $showDump = false)
     }
 }
 
-function regForceSavePassword($login, $password, $showDump = false)
+function regForceSavePassword($login, $password, $showDump = true)
 {
     // Хеширование пароля
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
