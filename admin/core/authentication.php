@@ -138,64 +138,6 @@ function set_cookie(
         . (! $HTTPOnly ? '' : '; HttpOnly'), false);
 }
 
-function checkLogin__OLD()
-{
-
-    $rls = [];
-    //look for user in the database
-    if (isset($_SESSION['log'])) {
-
-        $db = MysqliDb::getInstance();
-        $db->where('Login', trim($_SESSION['log']));
-        $row = $db->getOne('customers', 'cust_password, actions');
-
-        bdump([
-            'function'        => 'checkLogin',
-            'cust_password'   => $row['cust_password'],
-            "SESSION['pass']" => $_SESSION['pass'],
-        ]);
-
-        //found customer - check password
-        //unauthorized access
-        if (
-            ! $row ||
-            ! isset($_SESSION['pass']) ||
-            ($_SESSION['pass'] !== $row['cust_password'])
-        ) {
-
-            unset($_SESSION['log']);
-            unset($_SESSION['pass']);
-            unset($_SESSION['current_currency']);
-
-            bdump([
-                'DROP_SESSION' => $_SESSION,
-                'function'     => 'checkLogin',
-                'row_actions'  => $row['actions'],
-            ]);
-
-        } else {
-
-            $rls = unserialize($row['actions']);
-
-            bdump([
-                'IS_ADMIN_SESSION' => $_SESSION,
-                'function'         => 'checkLogin',
-                'row_actions'      => $row['actions'],
-                'rls'              => $rls,
-            ]);
-
-            unset($row);
-            # fix log errors WARNING: in_array() expects parameter 2 to be array, boolean given
-            if (! is_array($rls)) {
-                $rls = [];
-            }
-
-        }
-    }
-
-    return $rls;
-}
-
 function checkLogin()
 {
 
