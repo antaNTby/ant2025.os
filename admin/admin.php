@@ -29,22 +29,8 @@ if (isset($_COOKIE['PHPSESSID'])) {
 // regForceSavePassword($_POST['user_login'], $_POST['user_pw']);
 
 // ЗДЕСЬ ВСТАВЛЯЮТСЯ DO=PROCESSOR
+
 $relaccess = checkLogin();
-// dump($_SESSION);
-// dump($relaccess);
-
-// if ((! isset($_SESSION['log']) || ! in_array(100, $relaccess))) {
-//     $wrongLoginOrPw = 1;
-
-//     $elapsed = Tracy\Debugger::timer();
-//     // dump($elapsed);
-//     die(ERROR_FORBIDDEN);
-// } else {
-//     $LOG_OK = true;
-// //define start smarty template
-//     $smarty->assign('log_error', '');
-//     $smarty->assign('admin_main_content_template', 'start.tpl.html');
-// }
 
 if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
 

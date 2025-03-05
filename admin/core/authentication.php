@@ -234,11 +234,8 @@ function verifyPassword($login, $password, $showDump = false)
     }
 }
 
-function regForceSavePassword($login, $password)
+function regForceSavePassword($login, $password, $showDump = false)
 {
-
-    // dumpe([$login, $password]);
-
     // Хеширование пароля
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -251,28 +248,33 @@ function regForceSavePassword($login, $password)
     $db->where('Login', trim($login));
 
     if ($db->update('customers', $data)) {
-        bdump($db->count . ' records were updated');
+        if ($showDump) {
+            bdump($db->count . ' records were updated');
+        }
     } else {
-        bdump('update failed: ' . $db->getLastError());
+        if ($showDump) {
+            bdump('update failed: ' . $db->getLastError());
+        }
     }
 
-    dump([
-        'sql'            => $db->getLastQuery(),
-        'hashedPassword' => $hashedPassword,
-        'ПАРОЛЬ СБРОШЕН' => $data,
-        '_POST'          => $_POST['user_pw'],
-    ]);
+    if ($showDump) {
+        bdump([
+            'sql'            => $db->getLastQuery(),
+            'hashedPassword' => $hashedPassword,
+            'ПАРОЛЬ СБРОШЕН' => $data,
+            '_POST'          => $_POST['user_pw'],
+        ]);
+    }
 
-    // dumpe($db->getLastQuery());
     return $hashedPassword;
 }
 
-$site_url = 'ant2025.os';
-$logo256  = 'logo256.jpg';
+$_SITE_URL = 'ant2025.os';
+$_LOGO256  = 'logo256.jpg';
 
-$access_denied_html = (checkLogin() == [])
-? '<div class="alert alert-danger d-flex align-items-center my-5" role="alert">Access Denied</div>'
-: '';
+$ACCESS_DENIED_HTML = (checkLogin() == [])
+? '<div class="alert alert-danger d-flex align-items-center my-5 h2" role="alert">Access Denied - <i class="bi bi-database-slash"></i> - </div>'
+: '<div class="alert alert-success d-flex align-items-center my-5 h2" role="alert">Access Granted</div>';
 
 $bootstrap_icons_css_local = '<link rel="stylesheet" href="/lib/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">';
 $bootstrap_css_local       = '<link rel="stylesheet" href="/lib/bootstrap-5.3.3-dist/css/bootstrap.min.css">';
@@ -296,11 +298,11 @@ $ERROR_FORBIDDEN_HTML = <<<HTML
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-4 my-5">
-                <h2 class="text-center mt-5">{$site_url}</h2>
+                <h2 class="text-center mt-5">{$_SITE_URL}</h2>
 
-                <img alt="nix.by" class="d-block mx-auto rounded" src="/media/{$logo256}" style="background-color:#fff;margin:60px">
+                <img alt="nix.by" class="d-block mx-auto rounded" src="/media/{$_LOGO256}" style="background-color:#fff;margin:60px">
 
-                {$access_denied_html}
+                {$ACCESS_DENIED_HTML}
 
                 <form id="aushform" method="post">
                     <div class="mb-3">
