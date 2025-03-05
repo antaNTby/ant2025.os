@@ -138,7 +138,7 @@ function set_cookie(
         . (! $HTTPOnly ? '' : '; HttpOnly'), false);
 }
 
-function checkLogin()
+function checkLogin($showDump = false)
 {
     $roles   = [];
     $message = '';
@@ -165,7 +165,6 @@ function checkLogin()
             unset($_SESSION['pass']);
             unset($_SESSION['current_currency']);
         } else {
-
             try {
                 $roles = unserialize($row['actions']);
                 unset($row);
@@ -173,23 +172,24 @@ function checkLogin()
                 $roles = [];
             }
         }
-
     } else {
         $message .= 'User is not logged in. ';
     }
 
-    if ($message !== '') {
+    if ($showDump && $message !== '') {
         bdump($message);
     }
 
     return $roles;
 }
 
-function verifyPassword($login, $password)
+function verifyPassword($login, $password, $showDump = false)
 {
     // Проверяем входные данные перед обращением к базе
     if (! $login || ! $password) {
-        bdump('Please provide both login and password.');
+        if ($showDump) {
+            bdump('Please provide both login and password.');
+        }
         return false;
     }
 
@@ -199,13 +199,17 @@ function verifyPassword($login, $password)
 
     // Проверка: получила ли функция ровно одну запись из БД?
     if (! $row || $db->count !== 1) {
-        bdump('Invalid credentials');
+        if ($showDump) {
+            bdump('Invalid credentials');
+        }
         return false;
     }
 
     // Убеждаемся, что в полученной записи установлен пароль
     if (empty($row['cust_password'])) {
-        bdump('Password for this account is not set.');
+        if ($showDump) {
+            bdump('Password for this account is not set.');
+        }
         return false;
     }
 
@@ -223,7 +227,9 @@ function verifyPassword($login, $password)
 
         return true;
     } else {
-        bdump('Invalid credentials');
+        if ($showDump) {
+            bdump('Invalid credentials');
+        }
         return false;
     }
 }
