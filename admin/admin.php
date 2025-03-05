@@ -54,12 +54,6 @@ if (! isset($_SESSION['log']) || ! in_array(100, $relaccess)) {
         $hs = verifyPassword($_POST['user_login'], $_POST['user_pw']);
 
         if ($hs) {
-            // dumpe([$_SESSION, $_REQUEST, $hs, $_POST['user_login'], $_POST['user_pw']]);
-            $access_denied_html = '';
-
-            // dump($_SESSION);
-            // dump($relaccess);
-
             $url = set_query('&__tt=');
             // bdump($url);
             Redirect($url);

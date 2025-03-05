@@ -140,11 +140,10 @@ function set_cookie(
 
 function checkLogin()
 {
+    $roles   = [];
+    $message = '';
 
-    $rls  = [];
-    $mess = '';
-
-    //look for user in the database
+    // Look for the user in the database
     if (isset($_SESSION['log'])) {
 
         $db = MysqliDb::getInstance();
@@ -152,71 +151,81 @@ function checkLogin()
         $row = $db->getOne('customers', 'cust_password, actions');
 
         if (! $row) {
-            $mess .= 'Пользователь  не найден. ';
+            $message .= 'User not found. ';
         }
         if (! isset($_SESSION['pass'])) {
-            $mess .= 'Пароль не сохранен. ';
+            $message .= 'Password is not saved. ';
         }
-        if (($_SESSION['pass'] !== $row['cust_password'])) {
-            $mess .= 'Пароль не совпадает ';
+        if ($_SESSION['pass'] !== $row['cust_password']) {
+            $message .= 'Password does not match. ';
         }
 
-        if ($mess !== '') {
+        if ($message !== '') {
             unset($_SESSION['log']);
             unset($_SESSION['pass']);
             unset($_SESSION['current_currency']);
         } else {
 
             try {
-                $rls = unserialize($row['actions']);
+                $roles = unserialize($row['actions']);
                 unset($row);
             } catch (Exception $e) {
-                $rls = [];
+                $roles = [];
             }
-
         }
 
     } else {
-        $mess .= 'Пользователь  не залогинен. ';
+        $message .= 'User is not logged in. ';
     }
 
-    if ($mess !== '') {
-        bdump($mess);
+    if ($message !== '') {
+        bdump($message);
     }
 
-    return $rls;
+    return $roles;
 }
 
 function verifyPassword($login, $password)
 {
+    // Проверяем входные данные перед обращением к базе
+    if (! $login || ! $password) {
+        bdump('Please provide both login and password.');
+        return false;
+    }
+
     $db = MysqliDb::getInstance();
     $db->where('Login', trim($login));
     $row = $db->getOne('customers', 'cust_password, CID');
 
-    if (($db->count != 1) || $db->getLastError()) {
-        bdump("Wrong Login! [{$login}]; " . $db->getLastError());
+    // Проверка: получила ли функция ровно одну запись из БД?
+    if (! $row || $db->count !== 1) {
+        bdump('Invalid credentials');
         return false;
     }
 
-    // if ($db->count > 0 && password_verify($password, $row['cust_password'])) {
+    // Убеждаемся, что в полученной записи установлен пароль
+    if (empty($row['cust_password'])) {
+        bdump('Password for this account is not set.');
+        return false;
+    }
+
+    // Верифицируем, соответствует ли введённый пароль сохраненному хешу
     if (password_verify($password, $row['cust_password'])) {
-
+        // Устанавливаем переменные сессии — избегаем хранения излишне чувствительных данных
         $_SESSION['log']              = $login;
-        $_SESSION['pass']             = $row['cust_password']; //password_hash($password, PASSWORD_DEFAULT);
+        $_SESSION['pass']             = $row['cust_password'];
         $_SESSION['current_currency'] = $row['CID'];
+        // Можно добавить установку дополнительных переменных сессии, если нужно
 
-        // update statistic
+        // По желанию: добавьте запись в логи удачных входов, обновляйте статистику, переносите содержимое корзины и т.д.
         // stAddCustomerLog($login);
-        // move cart content into DB
         // moveCartFromSession2DB();
-        // dump(['set_SESSION' => $_SESSION]);
 
         return true;
     } else {
-        bdump("Wrong password for [{$login}]");
+        bdump('Invalid credentials');
         return false;
     }
-
 }
 
 function regForceSavePassword($login, $password)
