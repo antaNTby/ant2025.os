@@ -282,6 +282,13 @@ $bootstrap_css_local       = '<link rel="stylesheet" href="/lib/bootstrap-5.3.3-
 $bootstrap_icons_css_CDN = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">';
 $bootstrap_css_CDN       = '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">';
 
+$smarty->assign('headLinks', [
+    'bootstrap_icons_css_local' => $bootstrap_icons_css_local,
+    'bootstrap_css_local'       => $bootstrap_css_local,
+    'bootstrap_icons_css_CDN'   => $bootstrap_icons_css_CDN,
+    'bootstrap_css_CDN'         => $bootstrap_css_CDN,
+]);
+
 $ERROR_FORBIDDEN_HTML = <<<HTML
 <!DOCTYPE html>
 <html lang="en">

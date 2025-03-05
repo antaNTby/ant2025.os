@@ -29,10 +29,14 @@
     {* css links *}
     {*
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.min.css"> *}
-    <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css">
+    {* <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css"> *}
+    {* <link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css"> *}
     <link rel="stylesheet" type="text/css" href="/lib/datatables/datatables.css">
     <link rel="stylesheet" type="text/css" href="/admin/css/uiAdmin.css">
+    {$headLinks.bootstrap_icons_css_local}
+    {$headLinks.bootstrap_css_local}
+
+
 </head>
 
 
@@ -42,10 +46,6 @@
         {$smarty_error_message}
     </h6>
     {/if}
-
-<h1>{$adminlogname}</h1>
-
-
 
 
     <div aria-live="polite" aria-atomic="true" class="position-relative" id="toast-area">
